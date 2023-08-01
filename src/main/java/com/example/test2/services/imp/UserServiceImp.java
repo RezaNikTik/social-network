@@ -36,15 +36,21 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserOut create(UserIn model) {
+        UserEntity userEntity;
+        Profile profile;
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
 //        Optional<Profile> profile = profileRepository.findById(model.getProfileId());
-        UserEntity userEntity = model.convertToEntity(new UserEntity(),new Profile());
 //        if (profile == null){
 //            throw new CustomException("your profile dosent exiset",1001);
 //        }
-//        userEntity.setProfile(profile.get());
+         profile = model.convertToEntity(new Profile());
+        profileRepository.save(profile);
+         userEntity = model.convertToEntity(new UserEntity());
+        userEntity.setProfile(profile);
         UserEntity newUser = userRepository.save(userEntity);
+//        newUser.setProfile(profile);
+//        userEntity.setProfile(profile.get());
         return new UserOut(newUser);
     }
 

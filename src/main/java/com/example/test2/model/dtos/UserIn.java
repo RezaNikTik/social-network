@@ -29,10 +29,17 @@ public class UserIn {
     private String zipCode;
 
 
+    public Profile convertToEntity(Profile profile) {
+        if (profile == null){
+            new Profile();
+        }
+        profile.setCountry(this.getCountry());
+        profile.setCity(this.getCity());
+        profile.setZipCode(this.getZipCode());
+        return profile;
+    }
 
-
-
-    public UserEntity convertToEntity(UserEntity user,Profile profile) {
+    public UserEntity convertToEntity(UserEntity user) {
         if (user == null) {
             new UserEntity();
         }
@@ -41,10 +48,6 @@ public class UserIn {
         user.setPassword(this.getPassword());
         user.setAge(this.getAge());
         user.setEmail(this.getEmail());
-        profile.setCountry(this.getCountry());
-        profile.setCity(this.getCity());
-        profile.setZipCode(this.getZipCode());
-//        user.setProfile(profile.setCountry(this.getCountry()));
         return user;
     }
 }
