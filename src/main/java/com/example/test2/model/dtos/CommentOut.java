@@ -14,7 +14,10 @@ public class CommentOut {
 
     private String message;
 
+    private Long postId;
+
     public CommentOut(Comment comment) {
         this.message = comment.getMessage();
+        this.postId = comment.getPost().getId();
     }
 }

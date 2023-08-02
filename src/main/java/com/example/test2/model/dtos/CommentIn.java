@@ -13,12 +13,14 @@ import lombok.Setter;
 public class CommentIn {
 
     private String message;
+    private Long postId;
 
     public Comment convertToComment(Comment comment) {
-        if (comment == null){
-            new Comment();
+        if (comment == null) {
+            comment = new Comment();
         }
         comment.setMessage(this.getMessage());
         return comment;
     }
+
 }

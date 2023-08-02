@@ -16,4 +16,6 @@ public interface CommentService {
     void deleteById(Long id) throws CustomException;
 
     CommentOut getById(Long id) throws CustomException;
+
+    void updateById(Long id,CommentIn model);
 }

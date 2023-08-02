@@ -18,11 +18,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "message",nullable = false,length = 500)
+    @Column(name = "message", nullable = false, length = 500)
     private String message;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "post_id")
-//    private Post postComment;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

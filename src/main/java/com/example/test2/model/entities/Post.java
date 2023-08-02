@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity(name = "post")
@@ -21,13 +22,14 @@ public class Post {
 
     private String title;
 
-    private Date publishDate;
+    @CreationTimestamp
+    private LocalDateTime publishDate;
 
 //    @ManyToMany(mappedBy = "postSet")
 //    Set<Tag> tagSet;
 //
-//    @OneToMany(mappedBy = "postComment")
-//    private Set<Comment>commentPost;
+    @OneToMany(mappedBy = "post")
+    private Set<Comment>commentPost;
 
 
 }

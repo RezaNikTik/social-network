@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ import java.util.Date;
 public class PostOut {
 
     private String title;
-    private Date publishDate;
+    private LocalDateTime publishDate;
 
     public PostOut(Post post) {
         this.title = post.getTitle();

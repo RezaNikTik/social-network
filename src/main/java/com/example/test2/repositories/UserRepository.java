@@ -2,7 +2,6 @@ package com.example.test2.repositories;
 
 
 import com.example.test2.model.dtos.UserIn;
-import com.example.test2.model.dtos.UserOut;
 import com.example.test2.model.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

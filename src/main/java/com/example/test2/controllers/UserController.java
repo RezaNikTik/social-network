@@ -30,9 +30,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String create(@Valid @RequestBody UserIn model, BindingResult bindingResult) {
-        userService.create(model);
-        return "by by";
+    public ResponseEntity<UserOut> create(@Valid @RequestBody UserIn model, BindingResult bindingResult) {
+        return new  ResponseEntity<>(userService.create(model),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -41,8 +40,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserOut getById(@PathVariable(value = "id") long id) throws CustomException {
-        return userService.getById(id);
+    public  ResponseEntity<UserOut> getById(@PathVariable(value = "id") long id) throws CustomException {
+        return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

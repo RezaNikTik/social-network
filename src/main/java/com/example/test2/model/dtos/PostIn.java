@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,14 +17,12 @@ public class PostIn {
 
 
     private String title;
-    private Date publishDate;
 
     public Post convertToPost (Post post) {
         if (post == null){
             new Post();
         }
-        setTitle(this.title);
-        setPublishDate(this.publishDate);
+        post.setTitle(this.title);
         return post;
     }
 }

@@ -42,7 +42,7 @@ public class UserServiceImp implements UserService {
         model.setPassword(passwordEncoder.encode(model.getPassword()));
 //        Optional<Profile> profile = profileRepository.findById(model.getProfileId());
 //        if (profile == null){
-//            throw new CustomException("your profile dosent exiset",1001);
+//            throw new CustomException("your profile dose not exist",1001);
 //        }
          profile = model.convertToEntity(new Profile());
         profileRepository.save(profile);
