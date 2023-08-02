@@ -55,4 +55,7 @@ public class PostController {
     public ResponseEntity<List<CommentOut>> getAllCommentByPostId(@PathVariable Long id){
         return new ResponseEntity<>(postService.getAllCommentByPostId(id),HttpStatus.OK);
     }
+
+//    @PostMapping("/addTag")
+//    public void addTagToData()
 }

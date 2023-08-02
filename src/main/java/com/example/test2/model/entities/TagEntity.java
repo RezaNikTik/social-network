@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag {
+public class TagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,11 @@ public class Tag {
     @Column(name = "name",nullable = false,length = 100)
     private String name;
 
-//    @ManyToMany
-//    @JoinTable(name = "tag_post",
-//                joinColumns = @JoinColumn(name = "tag_id"),
-//                inverseJoinColumns = @JoinColumn(name = "post_id"))
-//    Set<Post> postSet;
+    @ManyToMany
+    @JoinTable(name = "tag_post",
+                joinColumns = @JoinColumn(name = "tag_id",referencedColumnName ="id"),
+                inverseJoinColumns = @JoinColumn(name = "post_id"))
+    Set<PostEntity> postEntity;
 
 
 

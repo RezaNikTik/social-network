@@ -1,12 +1,11 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Profile;
+import com.example.test2.model.entities.ProfileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -20,13 +19,13 @@ public class ProfileIn {
     private String zipCode;
 
 
-    public Profile convertToProfile(Profile profile) {
-        if (profile == null){
-            new Profile();
+    public ProfileEntity convertToProfile(ProfileEntity profileEntity) {
+        if (profileEntity == null){
+            new ProfileEntity();
         }
-        profile.setCity(this.getCity());
-        profile.setCountry(this.getCountry());
-        profile.setZipCode(this.getZipCode());
-        return profile;
+        profileEntity.setCity(this.getCity());
+        profileEntity.setCountry(this.getCountry());
+        profileEntity.setZipCode(this.getZipCode());
+        return profileEntity;
     }
 }

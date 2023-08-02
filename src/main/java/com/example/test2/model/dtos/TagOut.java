@@ -1,6 +1,6 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Tag;
+import com.example.test2.model.entities.TagEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class TagOut {
     private String name;
 
 
-    public TagOut (Tag tag) {
-        this.name = tag.getName();
+    public TagOut (TagEntity tagEntity) {
+        this.name = tagEntity.getName();
     }
 }

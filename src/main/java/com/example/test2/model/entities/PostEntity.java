@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,11 +25,11 @@ public class Post {
     @CreationTimestamp
     private LocalDateTime publishDate;
 
-//    @ManyToMany(mappedBy = "postSet")
-//    Set<Tag> tagSet;
-//
+    @ManyToMany(mappedBy = "postEntity")
+    Set<TagEntity> tagEntity;
+
     @OneToMany(mappedBy = "post")
-    private Set<Comment>commentPost;
+    private Set<CommentEntity> commentEntityPost;
 
 
 }

@@ -36,5 +36,5 @@ public class UserEntity {
 
     @OneToOne()
     @JoinColumn(name = "profile_id",referencedColumnName = "id")
-    private Profile profile;
+    private ProfileEntity profileEntity;
 }

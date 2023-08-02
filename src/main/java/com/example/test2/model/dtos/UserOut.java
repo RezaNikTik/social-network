@@ -1,5 +1,4 @@
 package com.example.test2.model.dtos;
-import com.example.test2.model.entities.Profile;
 import com.example.test2.model.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +29,10 @@ public class UserOut {
         this.lastName = user.getLastName();
         this.age = user.getAge();
         this.email = user.getEmail();
-//        this.profileId = user.getProfile().getId();
-//        this.country=user.getProfile().getCountry();
-//        this.city= user.getProfile().getCity();
-//        this.zipCode=user.getProfile().getZipCode();
-        this.profile = new ProfileOut(user.getProfile());
+//        this.profileId = user.getProfileEntity().getId();
+//        this.country=user.getProfileEntity().getCountry();
+//        this.city= user.getProfileEntity().getCity();
+//        this.zipCode=user.getProfileEntity().getZipCode();
+        this.profile = new ProfileOut(user.getProfileEntity());
     }
 }

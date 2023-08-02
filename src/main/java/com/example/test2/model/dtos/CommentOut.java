@@ -1,6 +1,6 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Comment;
+import com.example.test2.model.entities.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +16,8 @@ public class CommentOut {
 
     private Long postId;
 
-    public CommentOut(Comment comment) {
-        this.message = comment.getMessage();
-        this.postId = comment.getPost().getId();
+    public CommentOut(CommentEntity commentEntity) {
+        this.message = commentEntity.getMessage();
+        this.postId = commentEntity.getId();
     }
 }

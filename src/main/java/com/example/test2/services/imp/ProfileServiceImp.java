@@ -3,7 +3,7 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.ProfileIn;
 import com.example.test2.model.dtos.ProfileOut;
-import com.example.test2.model.entities.Profile;
+import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.services.ProfileService;
 import org.springframework.stereotype.Service;
@@ -22,21 +22,21 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public List<ProfileOut> getAll() {
-        List<Profile> list=profileRepository.findAll();
+        List<ProfileEntity> list=profileRepository.findAll();
         return list.stream().map(ProfileOut::new).toList();
 
     }
 
     @Override
     public ProfileOut create(ProfileIn model) {
-        Profile profile= model.convertToProfile(new Profile());
-        Profile newProfile= profileRepository.save(profile);
-        return new ProfileOut(newProfile);
+        ProfileEntity profileEntity = model.convertToProfile(new ProfileEntity());
+        ProfileEntity newProfileEntity = profileRepository.save(profileEntity);
+        return new ProfileOut(newProfileEntity);
     }
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<Profile> profile =profileRepository.findById(id);
+        Optional<ProfileEntity> profile =profileRepository.findById(id);
         if (profile.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
         }
@@ -45,7 +45,7 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public ProfileOut getById(Long id) throws CustomException {
-        Optional<Profile>profile = profileRepository.findById(id);
+        Optional<ProfileEntity>profile = profileRepository.findById(id);
         if (profile.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
         }

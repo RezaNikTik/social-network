@@ -1,6 +1,6 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Tag;
+import com.example.test2.model.entities.TagEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,11 @@ public class TagIn {
 
 
 
-    public Tag convertToTag(Tag tag) {
-        if (tag == null){
-            new Tag();
+    public TagEntity convertToTag(TagEntity tagEntity) {
+        if (tagEntity == null){
+            new TagEntity();
         }
-        tag.setName(this.getName());
-        return tag;
+        tagEntity.setName(this.getName());
+        return tagEntity;
     }
 }

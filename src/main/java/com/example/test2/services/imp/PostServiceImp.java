@@ -4,8 +4,7 @@ import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.model.dtos.PostIn;
 import com.example.test2.model.dtos.PostOut;
-import com.example.test2.model.entities.Comment;
-import com.example.test2.model.entities.Post;
+import com.example.test2.model.entities.PostEntity;
 import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.services.PostService;
@@ -30,20 +29,20 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<PostOut> getAll() {
-        List<Post> list = profileRepository.findAll();
+        List<PostEntity> list = profileRepository.findAll();
         return list.stream().map(PostOut::new).toList();
     }
 
     @Override
     public PostOut create(PostIn model) {
-        Post post = model.convertToPost(new Post());
-        Post newPost= profileRepository.save(post);
-        return new PostOut(newPost);
+        PostEntity postEntity = model.convertToPost(new PostEntity());
+        PostEntity newPostEntity = profileRepository.save(postEntity);
+        return new PostOut(newPostEntity);
     }
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<Post> post = profileRepository.findById(id);
+        Optional<PostEntity> post = profileRepository.findById(id);
         if (post.isEmpty()){
             throw  new CustomException("The ID you entered does not exist",1001);
         }
@@ -52,7 +51,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public PostOut getById(Long id) throws CustomException {
-        Optional<Post>post =profileRepository.findById(id);
+        Optional<PostEntity>post =profileRepository.findById(id);
         if (post.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
         }
@@ -60,7 +59,7 @@ public class PostServiceImp implements PostService {
     }
 
     public void updateById(Long id,PostIn model){
-        Optional<Post>post = profileRepository.findById(id);
+        Optional<PostEntity>post = profileRepository.findById(id);
         if (post.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
         }
@@ -69,7 +68,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<CommentOut> getAllCommentByPostId(Long postId) {
-//        List<Comment>list = commentRepository.findAll();
+//        List<CommentEntity>list = commentRepository.findAll();
 //        CommentOut comment= list.stream().map(CommentOut::new).toList();
         return profileRepository.getAllCommentByPostId(postId).stream().map(CommentOut::new).toList();
 

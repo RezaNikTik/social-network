@@ -1,6 +1,6 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Profile;
+import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,14 +29,14 @@ public class UserIn {
     private String zipCode;
 
 
-    public Profile convertToEntity(Profile profile) {
-        if (profile == null){
-            new Profile();
+    public ProfileEntity convertToEntity(ProfileEntity profileEntity) {
+        if (profileEntity == null){
+            new ProfileEntity();
         }
-        profile.setCountry(this.getCountry());
-        profile.setCity(this.getCity());
-        profile.setZipCode(this.getZipCode());
-        return profile;
+        profileEntity.setCountry(this.getCountry());
+        profileEntity.setCity(this.getCity());
+        profileEntity.setZipCode(this.getZipCode());
+        return profileEntity;
     }
 
     public UserEntity convertToEntity(UserEntity user) {

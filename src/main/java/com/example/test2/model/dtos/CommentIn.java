@@ -1,6 +1,6 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.Comment;
+import com.example.test2.model.entities.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +15,12 @@ public class CommentIn {
     private String message;
     private Long postId;
 
-    public Comment convertToComment(Comment comment) {
-        if (comment == null) {
-            comment = new Comment();
+    public CommentEntity convertToComment(CommentEntity commentEntity) {
+        if (commentEntity == null) {
+            commentEntity = new CommentEntity();
         }
-        comment.setMessage(this.getMessage());
-        return comment;
+        commentEntity.setMessage(this.getMessage());
+        return commentEntity;
     }
 
 }

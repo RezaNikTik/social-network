@@ -4,7 +4,7 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.UserIn;
 import com.example.test2.model.dtos.UserOut;
-import com.example.test2.model.entities.Profile;
+import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
@@ -37,20 +37,20 @@ public class UserServiceImp implements UserService {
     @Override
     public UserOut create(UserIn model) {
         UserEntity userEntity;
-        Profile profile;
+        ProfileEntity profileEntity;
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
-//        Optional<Profile> profile = profileRepository.findById(model.getProfileId());
-//        if (profile == null){
-//            throw new CustomException("your profile dose not exist",1001);
+//        Optional<ProfileEntity> profileEntity = profileRepository.findById(model.getProfileId());
+//        if (profileEntity == null){
+//            throw new CustomException("your profileEntity dose not exist",1001);
 //        }
-         profile = model.convertToEntity(new Profile());
-        profileRepository.save(profile);
+         profileEntity = model.convertToEntity(new ProfileEntity());
+        profileRepository.save(profileEntity);
          userEntity = model.convertToEntity(new UserEntity());
-        userEntity.setProfile(profile);
+        userEntity.setProfileEntity(profileEntity);
         UserEntity newUser = userRepository.save(userEntity);
-//        newUser.setProfile(profile);
-//        userEntity.setProfile(profile.get());
+//        newUser.setProfileEntity(profileEntity);
+//        userEntity.setProfileEntity(profileEntity.get());
         return new UserOut(newUser);
     }
 

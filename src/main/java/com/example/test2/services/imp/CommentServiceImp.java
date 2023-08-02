@@ -3,8 +3,8 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.CommentIn;
 import com.example.test2.model.dtos.CommentOut;
-import com.example.test2.model.entities.Comment;
-import com.example.test2.model.entities.Post;
+import com.example.test2.model.entities.CommentEntity;
+import com.example.test2.model.entities.PostEntity;
 import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.services.CommentService;
@@ -26,25 +26,25 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public List<CommentOut> getAll() {
-        List<Comment> list = commentRepository.findAll();
+        List<CommentEntity> list = commentRepository.findAll();
         return list.stream().map(CommentOut::new).toList();
     }
 
     @Override
     public CommentOut create(CommentIn model) {
-        Comment comment = model.convertToComment(new Comment());
-        Optional<Post> post = postRepository.findById(model.getPostId());
+        CommentEntity commentEntity = model.convertToComment(new CommentEntity());
+        Optional<PostEntity> post = postRepository.findById(model.getPostId());
         if (post.isEmpty()){
             throw new CustomException("The ID you entered does not exist", 1001);
         }
-        comment.setPost(post.get());
-        Comment newComment = commentRepository.save(comment);
-        return new CommentOut(newComment);
+        commentEntity.setPostEntity(post.get());
+        CommentEntity newCommentEntity = commentRepository.save(commentEntity);
+        return new CommentOut(newCommentEntity);
     }
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<Comment> comment = commentRepository.findById(id);
+        Optional<CommentEntity> comment = commentRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);
         }
@@ -53,7 +53,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public CommentOut getById(Long id) throws CustomException {
-        Optional<Comment> comment = commentRepository.findById(id);
+        Optional<CommentEntity> comment = commentRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);
         }
