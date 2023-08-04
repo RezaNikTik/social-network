@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/api/posts")
 @Validated
 public class PostController {
 
@@ -56,6 +56,8 @@ public class PostController {
         return new ResponseEntity<>(postService.getAllCommentByPostId(id),HttpStatus.OK);
     }
 
-//    @PostMapping("/addTag")
-//    public void addTagToData()
+    @PostMapping("/addTagToPost/{tagId}/{postId}")
+    public void addTagToPost(@PathVariable Long tagId,@PathVariable Long postId ){
+        postService.addTagToPost(tagId,postId);
+    }
 }

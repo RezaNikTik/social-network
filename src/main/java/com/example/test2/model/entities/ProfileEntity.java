@@ -28,7 +28,7 @@ public class ProfileEntity {
     private String zipCode;
 
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(mappedBy = "profileEntity")
     private UserEntity userEntity;
 
 

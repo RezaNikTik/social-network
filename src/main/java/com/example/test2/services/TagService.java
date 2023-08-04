@@ -15,4 +15,7 @@ public interface TagService {
     void deleteById(Long id) throws CustomException;
 
     TagOut getById(Long id) throws CustomException;
+
+    void updateById(Long id, TagIn tagIn) throws CustomException;
+
 }

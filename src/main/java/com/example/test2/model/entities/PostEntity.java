@@ -28,7 +28,7 @@ public class PostEntity {
     @ManyToMany(mappedBy = "postEntity")
     Set<TagEntity> tagEntity;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "postEntity")
     private Set<CommentEntity> commentEntityPost;
 
 
