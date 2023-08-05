@@ -74,8 +74,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void update(Long id, UserIn user) {
-        userRepository.update(id,user);
+    public void update(Long userId,Long profileId, UserIn user) {
+        profileRepository.updateById(profileId,user);
+        userRepository.update(userId,user);
 
     }
 }

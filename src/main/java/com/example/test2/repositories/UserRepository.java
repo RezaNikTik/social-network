@@ -18,8 +18,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     @Transactional
     @Modifying
     @Query("update UserEntity ue set ue.firstName=:#{#user.firstName},ue.lastName=:#{#user.lastName},ue.email=:#{#user.email}," +
-            "ue.age=:#{#user.age},ue.profileEntity=:#{#user.city},ue.profileEntity=:#{#user.country}," +
-            "ue.profileEntity=:#{#user.zipCode} where ue.id=:id")
+            "ue.age=:#{#user.age} where ue.id=:id")
     void update(@Param("id") Long id,UserIn user);
 
 }

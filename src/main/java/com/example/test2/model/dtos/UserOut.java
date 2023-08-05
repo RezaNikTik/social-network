@@ -22,6 +22,7 @@ public class UserOut {
 //    private String city;
 //    private String zipCode;
     ProfileOut profile;
+    private Long profileId;
 
 
     public  UserOut (UserEntity user) {
@@ -34,5 +35,6 @@ public class UserOut {
 //        this.city= user.getProfileEntity().getCity();
 //        this.zipCode=user.getProfileEntity().getZipCode();
         this.profile = new ProfileOut(user.getProfileEntity());
+        this.profileId=user.getProfileEntity().getId();
     }
 }
