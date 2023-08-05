@@ -25,10 +25,10 @@ public class PostEntity {
     @CreationTimestamp
     private LocalDateTime publishDate;
 
-    @ManyToMany(mappedBy = "postEntity")
+    @ManyToMany(mappedBy = "postEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Set<TagEntity> tagEntity;
 
-    @OneToMany(mappedBy = "postEntity")
+    @OneToMany(mappedBy = "postEntity",cascade = CascadeType.ALL)
     private Set<CommentEntity> commentEntityPost;
 
 

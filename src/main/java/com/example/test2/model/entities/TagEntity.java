@@ -23,7 +23,7 @@ public class TagEntity {
     @Column(name = "name",nullable = false,length = 100)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name = "tag_post",
                 joinColumns = @JoinColumn(name = "tag_id",referencedColumnName ="id"),
                 inverseJoinColumns = @JoinColumn(name = "post_id"))

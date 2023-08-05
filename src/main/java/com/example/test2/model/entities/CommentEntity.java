@@ -21,7 +21,7 @@ public class CommentEntity {
     @Column(name = "message", nullable = false, length = 500)
     private String message;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 }
