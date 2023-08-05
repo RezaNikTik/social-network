@@ -36,17 +36,15 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserOut create(UserIn model) {
-        UserEntity userEntity;
-        ProfileEntity profileEntity;
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
 //        Optional<ProfileEntity> profileEntity = profileRepository.findById(model.getProfileId());
 //        if (profileEntity == null){
 //            throw new CustomException("your profileEntity dose not exist",1001);
 //        }
-         profileEntity = model.convertToEntity(new ProfileEntity());
+        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
         profileRepository.save(profileEntity);
-         userEntity = model.convertToEntity(new UserEntity());
+        UserEntity userEntity = model.convertToEntity(new UserEntity());
         userEntity.setProfileEntity(profileEntity);
         UserEntity newUser = userRepository.save(userEntity);
 //        newUser.setProfileEntity(profileEntity);
@@ -56,27 +54,29 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<UserEntity> optionalUser = userRepository.findById(id);
-
-        if (optionalUser.isEmpty()) {
-            throw new CustomException("in id: " + id + " vojod nadarad", 1001);
-        }
+        getUserById(id);
         userRepository.deleteById(id);
     }
 
     @Override
     public UserOut getById(Long id) throws CustomException {
+        UserEntity user = getUserById(id);
+        return new UserOut(user);
+    }
+
+    private UserEntity getUserById(Long id) throws CustomException {
         Optional<UserEntity> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new CustomException("There is no such ID" + id, 1001);
         }
-        return new UserOut(optionalUser.get());
+
+        return optionalUser.get();
     }
 
     @Override
-    public void update(Long userId,Long profileId, UserIn user) {
-        profileRepository.updateById(profileId,user);
-        userRepository.update(userId,user);
+    public void update(Long userId, Long profileId, UserIn user) {
+        profileRepository.updateById(profileId, user);
+        userRepository.update(userId, user);
 
     }
 }

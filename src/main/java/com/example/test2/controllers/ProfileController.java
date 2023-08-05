@@ -2,7 +2,6 @@ package com.example.test2.controllers;
 
 import com.example.test2.model.dtos.ProfileIn;
 import com.example.test2.model.dtos.ProfileOut;
-import com.example.test2.model.dtos.UserIn;
 import com.example.test2.services.ProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

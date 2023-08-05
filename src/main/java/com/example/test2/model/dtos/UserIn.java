@@ -20,7 +20,7 @@ public class UserIn {
     private String lastName;
     private String password;
     private Integer age;
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,5}$",message ="your email is not valid")
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,5}$", message = "your email is not valid")
     private String email;
     private Long profileId;
     private String country;
@@ -30,8 +30,8 @@ public class UserIn {
 
 
     public ProfileEntity convertToEntity(ProfileEntity profileEntity) {
-        if (profileEntity == null){
-            new ProfileEntity();
+        if (profileEntity == null) {
+            profileEntity = new ProfileEntity();
         }
         profileEntity.setCountry(this.getCountry());
         profileEntity.setCity(this.getCity());
@@ -41,7 +41,7 @@ public class UserIn {
 
     public UserEntity convertToEntity(UserEntity user) {
         if (user == null) {
-            new UserEntity();
+            user = new UserEntity();
         }
         user.setFirstName(this.getFirstName());
         user.setLastName(this.getLastName());

@@ -12,11 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProfileOut {
 
+    private Long profileId;
     private String country;
     private String city;
     private String zipCode;
 
     public ProfileOut(ProfileEntity profileEntity) {
+        this.profileId= profileEntity.getId();
         this.country = profileEntity.getCountry();
         this.city = profileEntity.getCity();
         this.zipCode = profileEntity.getZipCode();

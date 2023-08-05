@@ -18,19 +18,18 @@ public class ProfileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "country",nullable = false,length = 100)
+    @Column(name = "country", nullable = false, length = 100)
     private String country;
 
-    @Column(name = "city",nullable = false,length = 100)
+    @Column(name = "city", nullable = false, length = 100)
     private String city;
 
-    @Column(name = "zipCode",nullable = false,length = 100)
+    @Column(name = "zipCode", nullable = false, length = 100)
     private String zipCode;
 
 
-    @OneToOne(mappedBy = "profileEntity",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "profileEntity")
     private UserEntity userEntity;
-
 
 
 }

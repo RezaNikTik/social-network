@@ -19,8 +19,6 @@ public class PostIn {
 
     private String title;
 
-    private String nameTag;
-
     public PostEntity convertToPost (PostEntity postEntity) {
         if (postEntity == null){
             new PostEntity();
@@ -29,15 +27,6 @@ public class PostIn {
         return postEntity;
     }
 
-/*    public PostEntity addTagToPost(PostEntity postEntity,TagEntity tagEntity){
-        if (postEntity == null){
-            new PostEntity();
-        }
-        Set<TagEntity> tagEntities =new HashSet<>();
-        postEntity.setTagEntity(tagEntities.add(tagEntity.setName();));
-
-    }
-       */
 
 
 }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity,Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 
     @Transactional
     @Modifying
     @Query("update UserEntity ue set ue.firstName=:#{#user.firstName},ue.lastName=:#{#user.lastName},ue.email=:#{#user.email}," +
             "ue.age=:#{#user.age} where ue.id=:id")
-    void update(@Param("id") Long id,UserIn user);
+    void update(@Param("id") Long id, UserIn user);
 
 }
