@@ -3,6 +3,7 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.ProfileIn;
 import com.example.test2.model.dtos.ProfileOut;
+import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.services.ProfileService;
@@ -36,19 +37,22 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<ProfileEntity> profile =profileRepository.findById(id);
-        if (profile.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         profileRepository.deleteById(id);
     }
 
     @Override
     public ProfileOut getById(Long id) throws CustomException {
         Optional<ProfileEntity>profile = profileRepository.findById(id);
-        if (profile.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         return new ProfileOut(profile.get());
+    }
+
+    public ProfileEntity showMessageForNotValidId(Long id){
+        Optional<ProfileEntity> comment = profileRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new CustomException("The ID you entered does not exist", 1001);
+        }
+        return comment.get();
     }
 }

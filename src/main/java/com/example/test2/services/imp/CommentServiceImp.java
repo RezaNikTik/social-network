@@ -44,24 +44,28 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<CommentEntity> comment = commentRepository.findById(id);
-        if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
-        }
+        showMessageForNotValidId(id);
         commentRepository.deleteById(id);
     }
 
     @Override
     public CommentOut getById(Long id) throws CustomException {
         Optional<CommentEntity> comment = commentRepository.findById(id);
-        if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
-        }
+        showMessageForNotValidId(id);
         return new CommentOut(comment.get());
     }
 
     @Override
     public void updateById(Long id, CommentIn model) {
         commentRepository.updateById(id, model);
+    }
+
+
+    public CommentEntity showMessageForNotValidId(Long id){
+        Optional<CommentEntity> comment = commentRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new CustomException("The ID you entered does not exist", 1001);
+        }
+        return comment.get();
     }
 }

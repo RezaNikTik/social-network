@@ -55,27 +55,19 @@ public class PostServiceImp implements PostService {
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<PostEntity> post = postRepository.findById(id);
-        if (post.isEmpty()){
-            throw  new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         postRepository.deleteById(id);
     }
 
     @Override
     public PostOut getById(Long id) throws CustomException {
         Optional<PostEntity>post =postRepository.findById(id);
-        if (post.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         return new PostOut(post.get());
     }
 
     public void updateById(Long id,PostIn model){
-        Optional<PostEntity>post = postRepository.findById(id);
-        if (post.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         postRepository.updateById(id,model);
     }
 
@@ -91,10 +83,16 @@ public class PostServiceImp implements PostService {
         if (tagEntity.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
         }
-        Optional<PostEntity> postEntity = postRepository.findById(postId);
-        if (postEntity.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(postId);
         postRepository.addTagToPost(tagId,postId);
+    }
+
+
+    public PostEntity showMessageForNotValidId(Long id){
+        Optional<PostEntity> comment = postRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new CustomException("The ID you entered does not exist", 1001);
+        }
+        return comment.get();
     }
 }

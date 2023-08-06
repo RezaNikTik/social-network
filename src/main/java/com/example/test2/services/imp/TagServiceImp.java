@@ -3,6 +3,7 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.TagIn;
 import com.example.test2.model.dtos.TagOut;
+import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
@@ -36,28 +37,29 @@ public class TagServiceImp implements TagService {
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        Optional<TagEntity> entity = tagRepository.findById(id);
-        if (entity.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         tagRepository.deleteById(id);
     }
 
     @Override
     public TagOut getById(Long id) throws CustomException {
         Optional<TagEntity> entity = tagRepository.findById(id);
-        if (entity.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
         return new TagOut(entity.get());
     }
 
     @Override
     public void updateById(Long id, TagIn tagIn) throws CustomException {
-        Optional<TagEntity> entity = tagRepository.findById(id);
-        if (entity.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
-        }
+        showMessageForNotValidId(id);
          tagRepository.updateById(id, tagIn);
+    }
+
+
+    public TagEntity showMessageForNotValidId(Long id){
+        Optional<TagEntity> comment = tagRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new CustomException("The ID you entered does not exist", 1001);
+        }
+        return comment.get();
     }
 }

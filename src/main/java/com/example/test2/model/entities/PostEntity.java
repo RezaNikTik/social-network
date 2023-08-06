@@ -22,7 +22,6 @@ public class PostEntity {
 
     private String title;
 
-    
     private LocalDateTime publishDate;
 
     @ManyToMany(mappedBy = "postEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

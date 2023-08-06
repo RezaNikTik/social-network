@@ -4,6 +4,7 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.UserIn;
 import com.example.test2.model.dtos.UserOut;
+import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
@@ -66,10 +67,7 @@ public class UserServiceImp implements UserService {
 
     private UserEntity getUserById(Long id) throws CustomException {
         Optional<UserEntity> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) {
-            throw new CustomException("There is no such ID" + id, 1001);
-        }
-
+        showMessageForNotValidId(id);
         return optionalUser.get();
     }
 
@@ -78,5 +76,14 @@ public class UserServiceImp implements UserService {
         profileRepository.updateById(profileId, user);
         userRepository.update(userId, user);
 
+    }
+
+
+    public UserEntity showMessageForNotValidId(Long id){
+        Optional<UserEntity> comment = userRepository.findById(id);
+        if (comment.isEmpty()) {
+            throw new CustomException("The ID you entered does not exist", 1001);
+        }
+        return comment.get();
     }
 }
