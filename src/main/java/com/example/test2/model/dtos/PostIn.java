@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +19,13 @@ public class PostIn {
 
 
     private String title;
-
+    private LocalDateTime publishDate;
     public PostEntity convertToPost (PostEntity postEntity) {
         if (postEntity == null){
-            new PostEntity();
+            postEntity= new PostEntity();
         }
         postEntity.setTitle(this.title);
+        postEntity.setPublishDate(this.publishDate);
         return postEntity;
     }
 

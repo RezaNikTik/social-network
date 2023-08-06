@@ -22,7 +22,7 @@ public class PostEntity {
 
     private String title;
 
-    @CreationTimestamp
+    
     private LocalDateTime publishDate;
 
     @ManyToMany(mappedBy = "postEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)

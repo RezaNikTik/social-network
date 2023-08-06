@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,12 @@ public class PostServiceImp implements PostService {
     @Override
     public PostOut create(PostIn model) {
         PostEntity postEntity = model.convertToPost(new PostEntity());
+        if (model.getPublishDate().isEqual(LocalDateTime.now())){
+            throw new CustomException("The time you entered is the same as the present time",1003);
+        }
+        if (model.getPublishDate().isBefore(LocalDateTime.now())){
+            throw new CustomException("The time you entered is less than the current time",1003);
+        }
         PostEntity newPostEntity = postRepository.save(postEntity);
         return new PostOut(newPostEntity);
     }
