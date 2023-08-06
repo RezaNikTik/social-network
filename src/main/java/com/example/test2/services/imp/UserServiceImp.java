@@ -37,19 +37,34 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserOut create(UserIn model) {
+//        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        model.setPassword(passwordEncoder.encode(model.getPassword()));
+////        Optional<ProfileEntity> profileEntity = profileRepository.findById(model.getProfileId());
+////        if (profileEntity == null){
+////            throw new CustomException("your profileEntity dose not exist",1001);
+////        }
+//        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
+//        profileRepository.save(profileEntity);
+//        UserEntity userEntity = model.convertToEntity(new UserEntity());
+//        userEntity.setProfileEntity(profileEntity);
+//        UserEntity newUser = userRepository.save(userEntity);
+////        newUser.setProfileEntity(profileEntity);
+////        userEntity.setProfileEntity(profileEntity.get());
+//        return new UserOut(newUser);
+
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
-//        Optional<ProfileEntity> profileEntity = profileRepository.findById(model.getProfileId());
-//        if (profileEntity == null){
-//            throw new CustomException("your profileEntity dose not exist",1001);
-//        }
-        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
-        profileRepository.save(profileEntity);
+
+
+
         UserEntity userEntity = model.convertToEntity(new UserEntity());
-        userEntity.setProfileEntity(profileEntity);
         UserEntity newUser = userRepository.save(userEntity);
-//        newUser.setProfileEntity(profileEntity);
-//        userEntity.setProfileEntity(profileEntity.get());
+        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
+        profileEntity.setUserEntity(newUser);
+        userEntity.setProfileEntity(profileRepository.save(profileEntity));
+//        profileEntity = profileRepository.save(profileEntity);
+
+
         return new UserOut(newUser);
     }
 

@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class ProfileEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "country", nullable = false, length = 100)
@@ -28,7 +27,8 @@ public class ProfileEntity {
     private String zipCode;
 
 
-    @OneToOne(mappedBy = "profileEntity")
+    @OneToOne()
+    @MapsId
     private UserEntity userEntity;
 
 

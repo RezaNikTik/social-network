@@ -34,7 +34,8 @@ public class UserEntity {
     @Column(name = "Email", nullable = false, length = 50)
     private String email;
 
-    @OneToOne()
-    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToOne(mappedBy = "userEntity")
+    @PrimaryKeyJoinColumn
     private ProfileEntity profileEntity;
 }

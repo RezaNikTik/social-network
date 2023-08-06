@@ -33,7 +33,7 @@ public class UserCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        UserIn bob = new UserIn();
+       /* UserIn bob = new UserIn();
         bob.setFirstName("bob");
         bob.setLastName("boby");
         bob.setPassword("123");
@@ -109,7 +109,7 @@ public class UserCommandLineRunner implements CommandLineRunner {
         commentService.create(comment);
         commentService.create(comment1);
         commentService.create(comment2);
-
+*/
 
 
     }
