@@ -55,7 +55,7 @@ public class TagServiceImp implements TagService {
     }
 
 
-    public TagEntity showMessageForNotValidId(Long id){
+    private TagEntity showMessageForNotValidId(Long id){
         Optional<TagEntity> comment = tagRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);

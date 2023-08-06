@@ -48,7 +48,7 @@ public class ProfileServiceImp implements ProfileService {
         return new ProfileOut(profile.get());
     }
 
-    public ProfileEntity showMessageForNotValidId(Long id){
+    private ProfileEntity showMessageForNotValidId(Long id){
         Optional<ProfileEntity> comment = profileRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);

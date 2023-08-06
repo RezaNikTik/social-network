@@ -18,6 +18,6 @@ public class CommentOut {
 
     public CommentOut(CommentEntity commentEntity) {
         this.message = commentEntity.getMessage();
-        this.postId = commentEntity.getId();
+        this.postId = commentEntity.getPostEntity().getId();
     }
 }

@@ -4,6 +4,7 @@ import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.model.dtos.PostIn;
 import com.example.test2.model.dtos.PostOut;
+import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.CommentRepository;
@@ -87,12 +88,19 @@ public class PostServiceImp implements PostService {
         postRepository.addTagToPost(tagId,postId);
     }
 
+    @Override
+    public List<TagOut> getAllTagAssignToPost(Long postId) {
+        return postRepository.getAllTagAssignToPost(postId).stream().map(TagOut::new).toList();
 
-    public PostEntity showMessageForNotValidId(Long id){
+    }
+
+
+    private PostEntity showMessageForNotValidId(Long id){
         Optional<PostEntity> comment = postRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);
         }
         return comment.get();
     }
+
 }

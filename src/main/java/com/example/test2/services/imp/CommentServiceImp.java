@@ -38,8 +38,7 @@ public class CommentServiceImp implements CommentService {
             throw new CustomException("The ID you entered does not exist", 1001);
         }
         commentEntity.setPostEntity(post.get());
-        CommentEntity newCommentEntity = commentRepository.save(commentEntity);
-        return new CommentOut(newCommentEntity);
+        return new CommentOut(commentRepository.save(commentEntity));
     }
 
     @Override
@@ -61,7 +60,7 @@ public class CommentServiceImp implements CommentService {
     }
 
 
-    public CommentEntity showMessageForNotValidId(Long id){
+    private CommentEntity showMessageForNotValidId(Long id){
         Optional<CommentEntity> comment = commentRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);

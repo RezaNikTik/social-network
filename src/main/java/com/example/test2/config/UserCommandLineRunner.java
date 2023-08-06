@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class UserCommandLineRunner implements CommandLineRunner {
 
@@ -65,6 +67,31 @@ public class UserCommandLineRunner implements CommandLineRunner {
         service.create(tom);
         service.create(rum);
 
+        TagIn tagIn=new TagIn();
+        tagIn.setName("electric");
+
+
+        TagIn tagIn1=new TagIn();
+        tagIn1.setName("day");
+
+
+        tagService.create(tagIn);
+        tagService.create(tagIn1);
+
+
+
+        PostIn post = new  PostIn();
+        post.setTitle("its great day");
+        post.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
+
+
+        PostIn post1 = new  PostIn();
+        post1.setTitle("its great day");
+        post1.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+
+        postService.create(post);
+        postService.create(post1);
+
 
         CommentIn comment = new CommentIn();
         comment.setMessage("joooon");
@@ -83,23 +110,7 @@ public class UserCommandLineRunner implements CommandLineRunner {
         commentService.create(comment1);
         commentService.create(comment2);
 
-        TagIn tagIn=new TagIn();
-        tagIn.setName("electric");
 
-
-        TagIn tagIn1=new TagIn();
-        tagIn1.setName("day");
-
-        tagService.create(tagIn);
-        tagService.create(tagIn1);
-
-
-        PostIn post = new  PostIn();
-        post.setTitle("its great day");
-
-
-        PostIn post1 = new  PostIn();
-        post1.setTitle("its great day");
 
     }
 }

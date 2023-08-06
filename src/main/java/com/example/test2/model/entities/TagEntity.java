@@ -1,12 +1,15 @@
 package com.example.test2.model.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "tag")
@@ -23,11 +26,13 @@ public class TagEntity {
     @Column(name = "name",nullable = false,length = 100)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tag_post",
                 joinColumns = @JoinColumn(name = "tag_id",referencedColumnName ="id"),
                 inverseJoinColumns = @JoinColumn(name = "post_id"))
-    Set<PostEntity> postEntity;
+    Set<PostEntity> postEntity = new HashSet<>();
 
 
 

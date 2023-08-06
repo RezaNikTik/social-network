@@ -12,10 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TagOut {
 
+    private Long id;
     private String name;
 
 
     public TagOut (TagEntity tagEntity) {
+        this.id= tagEntity.getId();
         this.name = tagEntity.getName();
     }
 }

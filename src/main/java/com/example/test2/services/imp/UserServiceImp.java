@@ -79,7 +79,7 @@ public class UserServiceImp implements UserService {
     }
 
 
-    public UserEntity showMessageForNotValidId(Long id){
+    private UserEntity showMessageForNotValidId(Long id){
         Optional<UserEntity> comment = userRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001);

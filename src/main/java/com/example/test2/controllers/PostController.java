@@ -4,6 +4,8 @@ package com.example.test2.controllers;
 import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.model.dtos.PostIn;
 import com.example.test2.model.dtos.PostOut;
+import com.example.test2.model.dtos.TagOut;
+import com.example.test2.model.entities.TagEntity;
 import com.example.test2.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,5 +61,10 @@ public class PostController {
     @PostMapping("/addTagToPost/{tagId}/{postId}")
     public void addTagToPost(@PathVariable Long tagId,@PathVariable Long postId ){
         postService.addTagToPost(tagId,postId);
+    }
+
+    @GetMapping("/assignTagToPost/{postId}")
+    public List<TagOut> getAllTagAssignToPost(@PathVariable Long postId){
+        return postService.getAllTagAssignToPost(postId);
     }
 }

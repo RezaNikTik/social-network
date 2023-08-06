@@ -1,8 +1,10 @@
 package com.example.test2.repositories;
 
 import com.example.test2.model.dtos.PostIn;
+import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.CommentEntity;
 import com.example.test2.model.entities.PostEntity;
+import com.example.test2.model.entities.TagEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity,Long> {
@@ -33,5 +37,10 @@ public interface PostRepository extends JpaRepository<PostEntity,Long> {
     @Modifying
     @Query(value = "insert into TAG_POST(tag_id, post_id) values(:tagId, :postId)", nativeQuery = true)
      void addTagToPost(@Param("tagId") Long tagId, @Param("postId") Long postId);
+
+
+    @Modifying
+    @Query(value = "select t.* from tag t join TAG_POST tp on t.id=tp.tag_id where tp.POST_ID=:postId",nativeQuery = true)
+    Set<TagEntity> getAllTagAssignToPost(@Param("postId")Long postId);
 
 }
