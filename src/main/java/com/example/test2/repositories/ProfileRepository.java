@@ -14,7 +14,8 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
 
     @Transactional
     @Modifying
-    @Query("update profile p set p.city=:#{#user.city},p.zipCode=:#{#user.zipCode},p.country=:#{#user.country} " +
-            "where p.id=:profileId")
+    @Query("update profile p set p.city=:#{#user.profileIn.city},p.zipCode=:#{#user.profileIn.zipCode}," +
+            "p.country=:#{#user.profileIn.country} " +
+            "where p.userEntity.id=:profileId")
     void updateById (@Param("profileId")Long profileId, UserIn user);
 }

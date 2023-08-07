@@ -28,10 +28,10 @@ public class ProfileController {
         return new ResponseEntity<>(profileService.getAll(),HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<ProfileOut> create(@Valid @RequestBody ProfileIn model, BindingResult bindingResult){
-        return new ResponseEntity<>(profileService.create(model),HttpStatus.OK);
-    }
+//    @PostMapping("")
+//    public ResponseEntity<ProfileOut> create(@Valid @RequestBody ProfileIn model, BindingResult bindingResult){
+//        return new ResponseEntity<>(profileService.create(model),HttpStatus.OK);
+//    }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id")Long id){

@@ -3,7 +3,6 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.ProfileIn;
 import com.example.test2.model.dtos.ProfileOut;
-import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.services.ProfileService;
@@ -29,10 +28,10 @@ public class ProfileServiceImp implements ProfileService {
     }
 
     @Override
-    public ProfileOut create(ProfileIn model) {
+    public ProfileEntity create(ProfileIn model) {
         ProfileEntity profileEntity = model.convertToProfile(new ProfileEntity());
-        ProfileEntity newProfileEntity = profileRepository.save(profileEntity);
-        return new ProfileOut(newProfileEntity);
+//        ProfileEntity newProfileEntity = profileRepository.save(profileEntity);
+        return profileEntity;
     }
 
     @Override

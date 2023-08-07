@@ -21,7 +21,7 @@ public class ProfileIn {
 
     public ProfileEntity convertToProfile(ProfileEntity profileEntity) {
         if (profileEntity == null){
-            new ProfileEntity();
+            profileEntity=new ProfileEntity();
         }
         profileEntity.setCity(this.getCity());
         profileEntity.setCountry(this.getCountry());

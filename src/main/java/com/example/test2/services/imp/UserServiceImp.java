@@ -4,7 +4,6 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.UserIn;
 import com.example.test2.model.dtos.UserOut;
-import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
@@ -24,9 +23,12 @@ public class UserServiceImp implements UserService {
 
     private final ProfileRepository profileRepository;
 
-    public UserServiceImp(UserRepository userRepository, ProfileRepository profileRepository) {
+    private final ProfileServiceImp profileServiceImp;
+
+    public UserServiceImp(UserRepository userRepository, ProfileRepository profileRepository, ProfileServiceImp profileServiceImp) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
+        this.profileServiceImp = profileServiceImp;
     }
 
     @Override
@@ -37,35 +39,14 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserOut create(UserIn model) {
-//        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        model.setPassword(passwordEncoder.encode(model.getPassword()));
-////        Optional<ProfileEntity> profileEntity = profileRepository.findById(model.getProfileId());
-////        if (profileEntity == null){
-////            throw new CustomException("your profileEntity dose not exist",1001);
-////        }
-//        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
-//        profileRepository.save(profileEntity);
-//        UserEntity userEntity = model.convertToEntity(new UserEntity());
-//        userEntity.setProfileEntity(profileEntity);
-//        UserEntity newUser = userRepository.save(userEntity);
-////        newUser.setProfileEntity(profileEntity);
-////        userEntity.setProfileEntity(profileEntity.get());
-//        return new UserOut(newUser);
-
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
-
-
-
         UserEntity userEntity = model.convertToEntity(new UserEntity());
-        UserEntity newUser = userRepository.save(userEntity);
-        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
-        profileEntity.setUserEntity(newUser);
-        userEntity.setProfileEntity(profileRepository.save(profileEntity));
-//        profileEntity = profileRepository.save(profileEntity);
-
-
-        return new UserOut(newUser);
+        ProfileEntity profileEntity = profileServiceImp.create(model.getProfileIn());
+        userEntity.setProfileEntity(profileEntity);
+        profileEntity.setUserEntity(userEntity);
+        userRepository.save(userEntity);
+        return new UserOut(userEntity);
     }
 
     @Override
@@ -87,8 +68,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void update(Long userId, Long profileId, UserIn user) {
-        profileRepository.updateById(profileId, user);
+    public void update(Long userId,UserIn user) {
+        showMessageForNotValidId(userId);
+        profileRepository.updateById(userId, user);
         userRepository.update(userId, user);
 
     }

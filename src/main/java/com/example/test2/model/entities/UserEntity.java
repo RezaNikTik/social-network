@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 
@@ -34,7 +35,7 @@ public class UserEntity {
     @Column(name = "Email", nullable = false, length = 50)
     private String email;
 
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.PERSIST)
     @OneToOne(mappedBy = "userEntity")
     @PrimaryKeyJoinColumn
     private ProfileEntity profileEntity;

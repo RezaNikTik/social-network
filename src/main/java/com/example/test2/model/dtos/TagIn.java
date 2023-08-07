@@ -18,7 +18,7 @@ public class TagIn {
 
     public TagEntity convertToTag(TagEntity tagEntity) {
         if (tagEntity == null){
-            new TagEntity();
+            tagEntity=new TagEntity();
         }
         tagEntity.setName(this.getName());
         return tagEntity;

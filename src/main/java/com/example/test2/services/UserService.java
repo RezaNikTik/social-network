@@ -16,5 +16,5 @@ public interface UserService {
 
     UserOut getById(Long id) throws CustomException;
 
-    void update (Long userId,Long profileId, UserIn user);
+    void update (Long userId,UserIn user);
 }

@@ -1,13 +1,11 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 
@@ -22,22 +20,8 @@ public class UserIn {
     private Integer age;
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,5}$", message = "your email is not valid")
     private String email;
-    private Long profileId;
-    private String country;
-    private String city;
-    @NotNull(message = "your zipCode most not null")
-    private String zipCode;
+    private ProfileIn profileIn;
 
-
-    public ProfileEntity convertToEntity(ProfileEntity profileEntity) {
-        if (profileEntity == null) {
-            profileEntity = new ProfileEntity();
-        }
-        profileEntity.setCountry(this.getCountry());
-        profileEntity.setCity(this.getCity());
-        profileEntity.setZipCode(this.getZipCode());
-        return profileEntity;
-    }
 
     public UserEntity convertToEntity(UserEntity user) {
         if (user == null) {
