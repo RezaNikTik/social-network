@@ -60,6 +60,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public void updateById(Long id, CommentIn model) {
+        showMessageForNotValidId(id);
         commentRepository.updateById(id, model);
     }
 
