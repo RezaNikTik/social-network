@@ -23,7 +23,7 @@ public interface PostService {
 
     List<CommentOut> getAllCommentByPostId(Long postId);
 
-    void addTagToPost(@PathVariable Long tagId, @PathVariable Long postId);
+    void addTagToPost( @PathVariable Long postId,@PathVariable Long tagId);
 
     List<TagOut> getAllTagAssignToPost(@PathVariable Long postId);
 

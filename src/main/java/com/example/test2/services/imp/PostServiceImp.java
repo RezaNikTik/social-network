@@ -79,7 +79,7 @@ public class PostServiceImp implements PostService {
         return postRepository.getAllCommentByPostId(postId).stream().map(CommentOut::new).toList();
     }
 
-    public void addTagToPost(@PathVariable Long tagId,@PathVariable Long postId){
+    public void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId){
         Optional<TagEntity> tagEntity = tagRepository.findById(tagId);
         if (tagEntity.isEmpty()){
             throw new CustomException("The ID you entered does not exist",1001);
