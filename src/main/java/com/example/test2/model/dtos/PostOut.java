@@ -17,7 +17,9 @@ public class PostOut {
     private LocalDateTime publishDate;
 
     public PostOut(PostEntity postEntity) {
-        this.title = postEntity.getTitle();
-        this.publishDate = postEntity.getPublishDate();
+        if (postEntity != null){
+            this.title = postEntity.getTitle();
+            this.publishDate = postEntity.getPublishDate();
+        }
     }
 }

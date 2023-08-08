@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
 
 @Getter
@@ -21,10 +22,13 @@ public class UserOut {
 
 
     public UserOut(UserEntity user) {
+        if (user != null){
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.age = user.getAge();
         this.email = user.getEmail();
+        if (Hibernate.isInitialized(user.getProfileEntity())&& user.getProfileEntity() !=null)
         this.profile = new ProfileOut(user.getProfileEntity());
+        }
     }
 }

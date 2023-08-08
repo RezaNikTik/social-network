@@ -17,6 +17,7 @@ public class TagOut {
 
 
     public TagOut (TagEntity tagEntity) {
+        if (tagEntity != null)
         this.id= tagEntity.getId();
         this.name = tagEntity.getName();
     }

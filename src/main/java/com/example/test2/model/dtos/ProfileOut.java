@@ -18,9 +18,11 @@ public class ProfileOut {
     private String zipCode;
 
     public ProfileOut(ProfileEntity profileEntity) {
-        this.profileId= profileEntity.getId();
-        this.country = profileEntity.getCountry();
-        this.city = profileEntity.getCity();
-        this.zipCode = profileEntity.getZipCode();
+        if (profileEntity != null) {
+            this.profileId = profileEntity.getId();
+            this.country = profileEntity.getCountry();
+            this.city = profileEntity.getCity();
+            this.zipCode = profileEntity.getZipCode();
+        }
     }
 }

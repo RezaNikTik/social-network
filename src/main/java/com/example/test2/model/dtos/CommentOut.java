@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 
 @Getter
 @Setter
@@ -17,7 +18,12 @@ public class CommentOut {
     private Long postId;
 
     public CommentOut(CommentEntity commentEntity) {
-        this.message = commentEntity.getMessage();
-        this.postId = commentEntity.getPostEntity().getId();
+        if (commentEntity != null) {
+            this.message = commentEntity.getMessage();
+
+            if (Hibernate.isInitialized(commentEntity.getPostEntity()) && commentEntity.getPostEntity() != null){
+                this.postId = commentEntity.getPostEntity().getId();
+            }
+        }
     }
 }
