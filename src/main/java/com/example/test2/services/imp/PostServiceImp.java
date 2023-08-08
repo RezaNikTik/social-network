@@ -11,6 +11,7 @@ import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.PostService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -38,6 +39,9 @@ public class PostServiceImp implements PostService {
     @Override
     public List<PostOut> getAll() {
         List<PostEntity> list = postRepository.findAll();
+        if (list.isEmpty()){
+            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        }
         return list.stream().map(PostOut::new).toList();
     }
 
@@ -45,10 +49,10 @@ public class PostServiceImp implements PostService {
     public PostOut create(PostIn model) {
         PostEntity postEntity = model.convertToPost(new PostEntity());
         if (model.getPublishDate().isEqual(LocalDateTime.now())){
-            throw new CustomException("The time you entered is the same as the present time",1003);
+            throw new CustomException("The time you entered is the same as the present time",1003, HttpStatus.BAD_REQUEST);
         }
         if (model.getPublishDate().isBefore(LocalDateTime.now())){
-            throw new CustomException("The time you entered is less than the current time",1003);
+            throw new CustomException("The time you entered is less than the current time",1003,HttpStatus.BAD_REQUEST);
         }
         PostEntity newPostEntity = postRepository.save(postEntity);
         return new PostOut(newPostEntity);
@@ -82,7 +86,7 @@ public class PostServiceImp implements PostService {
     public void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId){
         Optional<TagEntity> tagEntity = tagRepository.findById(tagId);
         if (tagEntity.isEmpty()){
-            throw new CustomException("The ID you entered does not exist",1001);
+            throw new CustomException("The ID you entered does not exist",1001, HttpStatus.NOT_FOUND);
         }
         showMessageForNotValidId(postId);
         postRepository.addTagToPost(tagId,postId);
@@ -98,7 +102,7 @@ public class PostServiceImp implements PostService {
     private PostEntity showMessageForNotValidId(Long id){
         Optional<PostEntity> comment = postRepository.findById(id);
         if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
+            throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);
         }
         return comment.get();
     }

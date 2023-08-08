@@ -6,6 +6,7 @@ import com.example.test2.model.dtos.ProfileOut;
 import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.services.ProfileService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class ProfileServiceImp implements ProfileService {
     @Override
     public List<ProfileOut> getAll() {
         List<ProfileEntity> list=profileRepository.findAll();
+        if (list.isEmpty()){
+            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        }
         return list.stream().map(ProfileOut::new).toList();
 
     }
@@ -50,7 +54,7 @@ public class ProfileServiceImp implements ProfileService {
     private ProfileEntity showMessageForNotValidId(Long id){
         Optional<ProfileEntity> comment = profileRepository.findById(id);
         if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
+            throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);
         }
         return comment.get();
     }

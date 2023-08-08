@@ -7,6 +7,7 @@ import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,6 +26,9 @@ public class TagServiceImp implements TagService {
     @Override
     public List<TagOut> getAll() {
         List<TagEntity>list = tagRepository.findAll();
+        if (list.isEmpty()){
+            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        }
         return list.stream().map(TagOut::new).toList();
     }
 
@@ -58,7 +62,7 @@ public class TagServiceImp implements TagService {
     private TagEntity showMessageForNotValidId(Long id){
         Optional<TagEntity> comment = tagRepository.findById(id);
         if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
+            throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);
         }
         return comment.get();
     }

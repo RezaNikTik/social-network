@@ -9,6 +9,7 @@ import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
 import com.example.test2.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class UserServiceImp implements UserService {
     @Override
     public List<UserOut> getAll() {
         List<UserEntity> userEntities = userRepository.findAll();
+        if (userEntities.isEmpty()){
+            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        }
         return userEntities.stream().map(UserOut::new).toList();
     }
 
@@ -79,7 +83,7 @@ public class UserServiceImp implements UserService {
     private UserEntity showMessageForNotValidId(Long id){
         Optional<UserEntity> comment = userRepository.findById(id);
         if (comment.isEmpty()) {
-            throw new CustomException("The ID you entered does not exist", 1001);
+            throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);
         }
         return comment.get();
     }

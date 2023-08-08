@@ -14,7 +14,5 @@ public class AppError {
 
     private Integer code;
 
-    private HttpStatus status;
-
     private LocalDateTime time;
 }

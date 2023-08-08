@@ -25,8 +25,8 @@ public class UserControllerAdvice extends ResponseEntityExceptionHandler  {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<Object> handelInternalService(CustomException e) {
-        return new ResponseEntity<Object>(new AppError(e.getMessage(), e.getCode(), HttpStatus.NOT_FOUND,
-                LocalDateTime.now()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Object>(new AppError(e.getMessage(), e.getCode(),LocalDateTime.now()),
+                HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
