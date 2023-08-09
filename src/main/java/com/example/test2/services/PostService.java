@@ -19,11 +19,11 @@ public interface PostService {
 
     PostOut getById(Long id) throws CustomException;
 
-    public void updateById(Long id,PostIn model);
+    public void updateById(Long id, PostIn model);
 
     List<CommentOut> getAllCommentByPostId(Long postId);
 
-    void addTagToPost( @PathVariable Long postId,@PathVariable Long tagId);
+    void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId);
 
     List<TagOut> getAllTagAssignToPost(@PathVariable Long postId);
 

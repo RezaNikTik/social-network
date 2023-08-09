@@ -17,5 +17,5 @@ public interface CommentService {
 
     CommentOut getById(Long id) throws CustomException;
 
-    void updateById(Long id,CommentIn model);
+    void updateById(Long id, CommentIn model);
 }

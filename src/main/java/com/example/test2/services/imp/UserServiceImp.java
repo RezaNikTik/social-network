@@ -35,8 +35,8 @@ public class UserServiceImp implements UserService {
     @Override
     public List<UserOut> getAll() {
         List<UserEntity> userEntities = userRepository.findAll();
-        if (userEntities.isEmpty()){
-            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        if (userEntities.isEmpty()) {
+            throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
         return userEntities.stream().map(UserOut::new).toList();
     }
@@ -72,7 +72,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void update(Long userId,UserIn user) {
+    public void update(Long userId, UserIn user) {
         showMessageForNotValidId(userId);
         profileRepository.updateById(userId, user);
         userRepository.update(userId, user);
@@ -80,7 +80,7 @@ public class UserServiceImp implements UserService {
     }
 
 
-    private UserEntity showMessageForNotValidId(Long id){
+    private UserEntity showMessageForNotValidId(Long id) {
         Optional<UserEntity> comment = userRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);

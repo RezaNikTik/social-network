@@ -23,9 +23,9 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public List<ProfileOut> getAll() {
-        List<ProfileEntity> list=profileRepository.findAll();
-        if (list.isEmpty()){
-            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        List<ProfileEntity> list = profileRepository.findAll();
+        if (list.isEmpty()) {
+            throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
         return list.stream().map(ProfileOut::new).toList();
 
@@ -46,12 +46,12 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public ProfileOut getById(Long id) throws CustomException {
-        Optional<ProfileEntity>profile = profileRepository.findById(id);
+        Optional<ProfileEntity> profile = profileRepository.findById(id);
         showMessageForNotValidId(id);
         return new ProfileOut(profile.get());
     }
 
-    private ProfileEntity showMessageForNotValidId(Long id){
+    private ProfileEntity showMessageForNotValidId(Long id) {
         Optional<ProfileEntity> comment = profileRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);

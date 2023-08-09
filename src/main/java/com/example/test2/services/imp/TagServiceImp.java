@@ -25,9 +25,9 @@ public class TagServiceImp implements TagService {
 
     @Override
     public List<TagOut> getAll() {
-        List<TagEntity>list = tagRepository.findAll();
-        if (list.isEmpty()){
-            throw new CustomException("you dont have any data",1004,HttpStatus.NOT_FOUND);
+        List<TagEntity> list = tagRepository.findAll();
+        if (list.isEmpty()) {
+            throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
         return list.stream().map(TagOut::new).toList();
     }
@@ -55,11 +55,11 @@ public class TagServiceImp implements TagService {
     @Override
     public void updateById(Long id, TagIn tagIn) throws CustomException {
         showMessageForNotValidId(id);
-         tagRepository.updateById(id, tagIn);
+        tagRepository.updateById(id, tagIn);
     }
 
 
-    private TagEntity showMessageForNotValidId(Long id){
+    private TagEntity showMessageForNotValidId(Long id) {
         Optional<TagEntity> comment = tagRepository.findById(id);
         if (comment.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);

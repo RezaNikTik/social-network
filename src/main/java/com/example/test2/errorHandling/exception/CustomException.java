@@ -2,11 +2,13 @@ package com.example.test2.errorHandling.exception;
 
 import jdk.jshell.Snippet;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class CustomException extends RuntimeException{
 
     private String message;
