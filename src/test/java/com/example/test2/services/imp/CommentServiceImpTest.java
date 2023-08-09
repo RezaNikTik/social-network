@@ -37,7 +37,7 @@ public class CommentServiceImpTest {
     private CommentRepository commentRepository;
 
 
-    AutoCloseable openMocks;
+    private AutoCloseable openMocks;
 
 
     @BeforeEach
