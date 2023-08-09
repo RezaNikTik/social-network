@@ -58,7 +58,6 @@ public class CommentServiceImpTest {
     }
 
     @Test
-    @ExceptionHandler(CustomException.class)
     public void getAll_exception() throws CustomException {
         Mockito.doReturn(new ArrayList<>()).when(commentRepository).findAll();
 
@@ -130,9 +129,11 @@ public class CommentServiceImpTest {
 
     @Test
     public void updateById_success() {
+        CommentIn commentIn =new CommentIn();
+        commentIn.setMessage("jegarrr");
         when(commentRepository.findById(1L)).thenReturn(Optional.of(new CommentEntity()));
-        assertDoesNotThrow(()->commentServiceImp.updateById(1L,this.createCommentIn()));
-        verify(commentRepository).updateById(1L,this.createCommentIn());
+        assertDoesNotThrow(()->commentServiceImp.updateById(1L,commentIn));
+        verify(commentRepository).updateById(1L,commentIn);
     }
 
     @Test

@@ -94,6 +94,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<TagOut> getAllTagAssignToPost(Long postId) {
+        showMessageForNotValidId(postId);
         return postRepository.getAllTagAssignToPost(postId).stream().map(TagOut::new).toList();
 
     }
