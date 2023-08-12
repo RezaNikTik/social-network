@@ -22,13 +22,14 @@ public class UserOut {
 
 
     public UserOut(UserEntity user) {
-        if (user != null){
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.age = user.getAge();
-        this.email = user.getEmail();
-        if (Hibernate.isInitialized(user.getProfileEntity())&& user.getProfileEntity() !=null)
-        this.profile = new ProfileOut(user.getProfileEntity());
+        if (user != null) {
+            this.firstName = user.getFirstName();
+            this.lastName = user.getLastName();
+            this.age = user.getAge();
+            this.email = user.getEmail();
+            if (Hibernate.isInitialized(user.getProfileEntity()) && user.getProfileEntity() != null) {
+                this.profile = new ProfileOut(user.getProfileEntity());
+            }
         }
     }
 }

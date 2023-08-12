@@ -15,7 +15,7 @@ public class CommentIn {
     private String message;
     private Long postId;
 
-    public CommentEntity convertToComment(CommentEntity commentEntity) {
+    public CommentEntity convertToEntity(CommentEntity commentEntity) {
         if (commentEntity == null) {
             commentEntity = new CommentEntity();
         }

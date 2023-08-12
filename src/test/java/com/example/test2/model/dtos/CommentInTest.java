@@ -16,26 +16,19 @@ public class CommentInTest {
 
     @Test
     public void convertToComment_ValidInput_Success() {
-
-
         CommentIn commentIn = new CommentIn();
         commentIn.setMessage("Test message");
 
-        CommentEntity mockCommentEntity = mock(CommentEntity.class);
-
-        CommentEntity result = commentIn.convertToComment(mockCommentEntity);
-
-        assertEquals(mockCommentEntity.getMessage(), result.getMessage());
-        verify(mockCommentEntity, times(1)).setMessage(commentIn.getMessage());
+        CommentEntity mockCommentEntity = new CommentEntity();
+        commentIn.convertToEntity(mockCommentEntity);
+        assertEquals(commentIn.getMessage(), mockCommentEntity.getMessage());
     }
 
     @Test
     public void convertToComment_NullInput_Success() {
         CommentIn commentIn = new CommentIn();
         commentIn.setMessage("Test message");
-
-        CommentEntity result = commentIn.convertToComment(null);
-
+        CommentEntity result = commentIn.convertToEntity(null);
         assertEquals(commentIn.getMessage(), result.getMessage());
     }
 

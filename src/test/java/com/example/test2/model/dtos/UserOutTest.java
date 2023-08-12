@@ -1,11 +1,9 @@
 package com.example.test2.model.dtos;
 
+import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,29 +11,48 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 public class UserOutTest {
 
-
-    @Mock
-    private UserEntity userEntity;
-
-    @Test
-    public void constructor_WithNonNullUserEntity() {
-        Mockito.when(userEntity.getAge()).thenReturn(1);
-        Mockito.when(userEntity.getFirstName()).thenReturn("re");
-        Mockito.when(userEntity.getLastName()).thenReturn("bo");
-        Mockito.when(userEntity.getEmail()).thenReturn("sdfjm");
-        Mockito.when(userEntity.getPassword()).thenReturn("123");
-
-        UserOut userOut = new UserOut(userEntity);
-        assertEquals(userEntity.getAge(), userOut.getAge());
-        assertEquals(userEntity.getFirstName(), userOut.getFirstName());
-        assertEquals(userEntity.getLastName(), userOut.getLastName());
-    }
-
     @Test
     public void constructor_WithNullUserEntity() {
         UserOut user = new UserOut(null);
-        assertEquals(null, user.getLastName());
-        assertEquals(null, user.getFirstName());
-        assertEquals(null, user.getEmail());
+    }
+
+    @Test
+    public void constructor_WithNonNullUserEntity() {
+        UserOut userOut = new UserOut(this.userEntity());
+        assertEquals(this.userEntity().getAge(), userOut.getAge());
+        assertEquals(this.userEntity().getFirstName(), userOut.getFirstName());
+        assertEquals(this.userEntity().getLastName(), userOut.getLastName());
+    }
+
+    @Test
+    public void constructor_WithNonNullUserEntityAndRelation() {
+        UserOut userOut = new UserOut(this.userEntity());
+
+        assertEquals(this.userEntity().getAge(), userOut.getAge());
+        assertEquals(this.userEntity().getFirstName(), userOut.getFirstName());
+        assertEquals(this.userEntity().getLastName(), userOut.getLastName());
+        assertEquals(this.userEntity().getProfileEntity().getCity(), userOut.getProfile().getCity());
+        assertEquals(this.userEntity().getProfileEntity().getCountry(), userOut.getProfile().getCountry());
+    }
+
+
+    private UserEntity userEntity() {
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+        user.setFirstName("re");
+        user.setLastName("bo");
+        user.setAge(26);
+        user.setEmail("sdfjm");
+        user.setPassword("dfjkjh");
+        user.setProfileEntity(this.profileEntity());
+        return user;
+    }
+
+    private ProfileEntity profileEntity() {
+        ProfileEntity profile = new ProfileEntity();
+        profile.setCity("DC");
+        profile.setCountry("USA");
+        profile.setZipCode("123");
+        return profile;
     }
 }

@@ -33,7 +33,7 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public ProfileEntity create(ProfileIn model) {
-        ProfileEntity profileEntity = model.convertToProfile(new ProfileEntity());
+        ProfileEntity profileEntity = model.convertToEntity(new ProfileEntity());
 //        ProfileEntity newProfileEntity = profileRepository.save(profileEntity);
         return profileEntity;
     }

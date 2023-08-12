@@ -9,12 +9,11 @@ import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.*;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -65,26 +63,19 @@ public class UserServiceImpTest {
 
     @Test
     public void create_success() {
-        UserIn userIn = new UserIn();
-        userIn.setPassword("123");
-        userIn.setAge(20);
-        userIn.setEmail("bob@gmail.com");
-        userIn.setFirstName("ahmad");
-        userIn.setLastName("babak");
-
         ProfileIn profile = new ProfileIn();
         profile.setCity("chavosh");
         profile.setCountry("ir");
         profile.setZipCode("123");
-        ProfileEntity profileEntity = profileServiceImp.create(profile);
+
+        UserIn userIn = this.userIn();
+        userIn.setProfileIn(profile);
+
+        Mockito.when(profileServiceImp.create(Mockito.any(ProfileIn.class))).thenReturn(new ProfileEntity());
         userIn.setProfileIn(profile);
         Mockito.when(userRepository.save(this.createUserEntity())).thenReturn(new UserEntity());
 
         UserOut userOut = userServiceImp.create(userIn);
-    }
-
-    @Test
-    public void create_exception() {
     }
 
     @Test
@@ -121,12 +112,7 @@ public class UserServiceImpTest {
 
     @Test
     public void update_success() {
-        UserIn userIn = new UserIn();
-        userIn.setPassword("123");
-        userIn.setAge(20);
-        userIn.setEmail("bob@gmail.com");
-        userIn.setFirstName("ahmad");
-        userIn.setLastName("babak");
+        UserIn userIn = this.userIn();
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
         profileRepository.updateById(2L, userIn);
         userServiceImp.update(1L, userIn);
@@ -134,12 +120,7 @@ public class UserServiceImpTest {
 
     @Test
     public void update_idIsNotValid_exception() {
-        UserIn userIn = new UserIn();
-        userIn.setPassword("123");
-        userIn.setAge(20);
-        userIn.setEmail("bob@gmail.com");
-        userIn.setFirstName("ahmad");
-        userIn.setLastName("babak");
+        UserIn userIn = this.userIn();
 
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
         CustomException exceptions = assertThrows(CustomException.class,
@@ -167,6 +148,16 @@ public class UserServiceImpTest {
             list.add(userEntity);
         }
         return list;
+    }
+
+    private UserIn userIn() {
+        UserIn userIn = new UserIn();
+        userIn.setPassword("123");
+        userIn.setAge(20);
+        userIn.setEmail("bob@gmail.com");
+        userIn.setFirstName("ahmad");
+        userIn.setLastName("babak");
+        return userIn;
     }
 
 }

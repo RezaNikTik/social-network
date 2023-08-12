@@ -1,6 +1,5 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,13 +18,21 @@ public class UserInTest {
 
 
     @Test
+    public void convertToEntity_WithNullUserIn() {
+        UserIn userIn = this.userIn();
+
+        UserEntity user = userIn.convertToEntity(null);
+
+        assertEquals(userIn.getFirstName(), user.getFirstName());
+        assertEquals(userIn.getLastName(), user.getLastName());
+        assertEquals(userIn.getAge(), user.getAge());
+        assertEquals(userIn.getEmail(), user.getEmail());
+        assertEquals(userIn.getPassword(), user.getPassword());
+    }
+
+    @Test
     public void convertToEntity_WithUserIn() {
-        UserIn userIn = new UserIn();
-        userIn.setFirstName("reza");
-        userIn.setLastName("pak");
-        userIn.setPassword("123");
-        userIn.setAge(1);
-        userIn.setEmail("kjlkjdflkj");
+        UserIn userIn = this.userIn();
 
         UserEntity userEntity = new UserEntity();
 
@@ -39,31 +46,8 @@ public class UserInTest {
     }
 
     @Test
-    public void convertToEntity_WithNullUserIn() {
-        UserIn userIn = new UserIn();
-        userIn.setFirstName("reza");
-        userIn.setLastName("pak");
-        userIn.setPassword("123");
-        userIn.setAge(1);
-        userIn.setEmail("kjlkjdflkj");
-
-        UserEntity user = userIn.convertToEntity(null);
-
-        assertEquals(userIn.getFirstName(), user.getFirstName());
-        assertEquals(userIn.getLastName(), user.getLastName());
-        assertEquals(userIn.getAge(), user.getAge());
-        assertEquals(userIn.getEmail(), user.getEmail());
-        assertEquals(userIn.getPassword(), user.getPassword());
-    }
-
-    @Test
     public void convertToEntity_WithNullUserInAndNotValidEmail() {
-        UserIn userIn = new UserIn();
-        userIn.setFirstName("reza");
-        userIn.setLastName("pak");
-        userIn.setPassword("123");
-        userIn.setAge(1);
-        userIn.setEmail("sdlfjl;jd");
+        UserIn userIn = this.userIn();
 
         UserEntity user = userIn.convertToEntity(null);
 
@@ -73,5 +57,15 @@ public class UserInTest {
         assertEquals(1, violations.size());
         ConstraintViolation<UserIn> violation = violations.iterator().next();
         assertEquals("your email is not valid", violation.getMessage());
+    }
+
+    private UserIn userIn() {
+        UserIn userIn = new UserIn();
+        userIn.setFirstName("reza");
+        userIn.setLastName("pak");
+        userIn.setPassword("123");
+        userIn.setAge(1);
+        userIn.setEmail("sdlfjl;jd");
+        return userIn;
     }
 }

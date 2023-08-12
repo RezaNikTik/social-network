@@ -11,14 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TagIn {
-
     private String name;
 
-
-
-    public TagEntity convertToTag(TagEntity tagEntity) {
-        if (tagEntity == null){
-            tagEntity=new TagEntity();
+    public TagEntity convertToEntity(TagEntity tagEntity) {
+        if (tagEntity == null) {
+            tagEntity = new TagEntity();
         }
         tagEntity.setName(this.getName());
         return tagEntity;

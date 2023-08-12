@@ -3,38 +3,32 @@ package com.example.test2.model.dtos;
 import com.example.test2.model.entities.TagEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TagInTest {
 
 
-    @Mock
-    private TagEntity mockTagEntity;
-
     @Test
-    public void convertToTag_NullTagEntity() {
+    public void convertToEntity_WithNullTagEntity() {
         TagIn tagIn = new TagIn();
         tagIn.setName("TagName");
 
-        TagEntity result = tagIn.convertToTag(null);
+        TagEntity results = tagIn.convertToEntity(null);
 
-        assertEquals("TagName", result.getName());
+        assertEquals("TagName", results.getName());
     }
 
     @Test
-    public void convertToTag_ExistingTagEntity() {
+    public void convertToEntity_WithTagEntity() {
         TagIn tagIn = new TagIn();
         tagIn.setName("NewTagName");
 
-        when(mockTagEntity.getName()).thenReturn("OldTagName");
+        TagEntity tagEntity = new TagEntity();
+        TagEntity results = tagIn.convertToEntity(tagEntity);
 
-        TagEntity result = tagIn.convertToTag(mockTagEntity);
-
-        assertEquals("OldTagName", result.getName());
+        assertEquals(tagIn.getName(), results.getName());
     }
 }

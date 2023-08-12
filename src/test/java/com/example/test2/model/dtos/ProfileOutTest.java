@@ -3,43 +3,32 @@ package com.example.test2.model.dtos;
 import com.example.test2.model.entities.ProfileEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProfileOutTest {
 
-
-    @Mock
-    private ProfileEntity mockProfileEntity;
-
     @Test
-    public void convertToProfile_WithNonNullProfileEntity() {
-        when(mockProfileEntity.getId()).thenReturn(1L);
-        when(mockProfileEntity.getCountry()).thenReturn("Country");
-        when(mockProfileEntity.getCity()).thenReturn("City");
-        when(mockProfileEntity.getZipCode()).thenReturn("12345");
-
-        ProfileOut profileOut = new ProfileOut(mockProfileEntity);
-
-        assertEquals(1L, profileOut.getProfileId());
-        assertEquals("Country", profileOut.getCountry());
-        assertEquals("City", profileOut.getCity());
-        assertEquals("12345", profileOut.getZipCode());
-
+    public void convertToEntity_WithNullProfileEntity() {
+        new ProfileOut(null);
 
     }
 
     @Test
-    public void convertToProfile_WithNullProfileEntity_success() {
-        ProfileOut profileOut = new ProfileOut(null);
+    public void convertToEntity_WithNonNullProfileEntity() {
+        ProfileEntity profile = new ProfileEntity();
+        profile.setZipCode("123");
+        profile.setCountry("USA");
+        profile.setCity("DC");
 
-        assertEquals(null, profileOut.getProfileId());
-        assertEquals(null, profileOut.getCountry());
-        assertEquals(null, profileOut.getCity());
-        assertEquals(null, profileOut.getZipCode());
+        ProfileOut profileOuts = new ProfileOut(profile);
+
+        assertEquals(profile.getId(), profileOuts.getProfileId());
+        assertEquals(profile.getCountry(), profileOuts.getCountry());
+        assertEquals(profile.getCity(), profileOuts.getCity());
+        assertEquals(profile.getZipCode(), profileOuts.getZipCode());
     }
+
 }

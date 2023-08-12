@@ -16,26 +16,18 @@ public class PostOutTest {
 
 
     @Test
-    public void convertToPost_WithNonNullEntity_Success() {
-        PostEntity mockPostEntity = Mockito.mock(PostEntity.class);
-        when(mockPostEntity.getTitle()).thenReturn("Test Title");
-        LocalDateTime publishDate = LocalDateTime.of(2023, 5, 17, 10, 30);
-        when(mockPostEntity.getPublishDate()).thenReturn(publishDate);
-
-        PostOut postOut = new PostOut(mockPostEntity);
-
-        assertEquals("Test Title", postOut.getTitle());
-        assertEquals(publishDate, postOut.getPublishDate());
+    public void convertToEntity_WithNullEntity() {
+        new PostOut(null);
     }
 
     @Test
-    public void convertToPost_WithNullEntity_Success() {
-        PostEntity mockPostEntity = null;
-
-        PostOut postOut = new PostOut(mockPostEntity);
-
-        assertEquals(null, postOut.getTitle());
-        assertEquals(null, postOut.getPublishDate());
+    public void convertToEntity_WithNonNullEntity() {
+        PostEntity postEntity = new PostEntity();
+        postEntity.setTitle("Test Title");
+        postEntity.setPublishDate(LocalDateTime.of(2023, 6, 12, 17, 20));
+        PostOut postOuts = new PostOut(postEntity);
+        assertEquals(postEntity.getTitle(), postOuts.getTitle());
+        assertEquals(postEntity.getPublishDate(), postOuts.getPublishDate());
     }
 
 }

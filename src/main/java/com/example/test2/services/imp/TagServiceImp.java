@@ -3,13 +3,11 @@ package com.example.test2.services.imp;
 import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.TagIn;
 import com.example.test2.model.dtos.TagOut;
-import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +32,7 @@ public class TagServiceImp implements TagService {
 
     @Override
     public TagOut create(TagIn model) {
-        TagEntity tagEntity = model.convertToTag(new TagEntity());
+        TagEntity tagEntity = model.convertToEntity(new TagEntity());
         TagEntity newTagEntity = tagRepository.save(tagEntity);
         return new TagOut(newTagEntity);
     }

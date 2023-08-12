@@ -36,7 +36,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public CommentOut create(CommentIn model) {
-        CommentEntity commentEntity = model.convertToComment(new CommentEntity());
+        CommentEntity commentEntity = model.convertToEntity(new CommentEntity());
         Optional<PostEntity> post = postRepository.findById(model.getPostId());
         if (post.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);

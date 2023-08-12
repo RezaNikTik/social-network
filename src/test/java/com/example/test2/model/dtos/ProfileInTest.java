@@ -2,11 +2,7 @@ package com.example.test2.model.dtos;
 
 import com.example.test2.model.entities.ProfileEntity;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.validation.ConstraintViolation;
@@ -17,22 +13,28 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProfileInTest {
 
     @Test
-    public void convertToProfile_WithData_success() {
-        ProfileIn profile = new ProfileIn();
+    public void convertToEntity_WithNullProfileEntity() {
+        ProfileIn profile = this.profileIn();
 
-        profile.setZipCode("123");
-        profile.setCountry("USA");
-        profile.setCity("DC");
+        ProfileEntity results = profile.convertToEntity(null);
+
+        assertEquals(profile.getCountry(), results.getCountry());
+        assertEquals(profile.getCity(), results.getCity());
+        assertEquals(profile.getZipCode(), results.getZipCode());
+    }
+
+    @Test
+    public void convertToEntity_WithProfileEntity() {
+        ProfileIn profile = this.profileIn();
 
         ProfileEntity profileEntity = new ProfileEntity();
 
-        ProfileEntity results = profile.convertToProfile(profileEntity);
+        ProfileEntity results = profile.convertToEntity(profileEntity);
 
         assertEquals(profile.getCountry(), results.getCountry());
         assertEquals(profile.getCity(), results.getCity());
@@ -40,29 +42,10 @@ public class ProfileInTest {
     }
 
     @Test
-    public void convertToProfile_WithNullProfileEntity_success() {
-        ProfileIn profile = new ProfileIn();
-
-        profile.setZipCode("123");
-        profile.setCountry("USA");
-        profile.setCity("DC");
-
-        ProfileEntity results = profile.convertToProfile(null);
-
-        assertEquals(profile.getCountry(), results.getCountry());
-        assertEquals(profile.getCity(), results.getCity());
-        assertEquals(profile.getZipCode(), results.getZipCode());
-    }
-
-    @Test
-    public void convertToProfile_WithNullZipCode_success() {
-        ProfileIn profile = new ProfileIn();
-
+    public void convertToEntity_WithNullZipCode() {
+        ProfileIn profile = this.profileIn();
         profile.setZipCode(null);
-        profile.setCountry("USA");
-        profile.setCity("DC");
-
-        ProfileEntity results = profile.convertToProfile(null);
+        ProfileEntity results = profile.convertToEntity(null);
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -70,5 +53,13 @@ public class ProfileInTest {
         assertEquals(1, violations.size());
         ConstraintViolation<ProfileIn> violation = violations.iterator().next();
         assertEquals("your zipCode most not null", violation.getMessage());
+    }
+
+    private ProfileIn profileIn() {
+        ProfileIn profile = new ProfileIn();
+        profile.setZipCode("123");
+        profile.setCountry("USA");
+        profile.setCity("DC");
+        return profile;
     }
 }

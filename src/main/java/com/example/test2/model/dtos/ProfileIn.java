@@ -19,7 +19,7 @@ public class ProfileIn {
     private String zipCode;
 
 
-    public ProfileEntity convertToProfile(ProfileEntity profileEntity) {
+    public ProfileEntity convertToEntity(ProfileEntity profileEntity) {
         if (profileEntity == null){
             profileEntity=new ProfileEntity();
         }

@@ -1,50 +1,55 @@
 package com.example.test2.model.dtos;
 
-import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.entities.CommentEntity;
 import com.example.test2.model.entities.PostEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.test.context.event.annotation.PrepareTestInstance;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommentOutTest {
 
-    @Spy
-    @InjectMocks
-    private CommentOut commentOut;
-
-    @Mock
-    private CommentEntity mockCommentEntity;
-
-
     @Test
-    public void constructor_WithInitializedCommentEntity_Success() {
-        when(mockCommentEntity.getMessage()).thenReturn("Test comment");
-
-        PostEntity mockPostEntity = mock(PostEntity.class);
-        when(mockPostEntity.getId()).thenReturn(1L);
-        when(mockCommentEntity.getPostEntity()).thenReturn(mockPostEntity);
-
-        CommentOut commentOut = new CommentOut(mockCommentEntity);
-
-        assertEquals(mockCommentEntity.getMessage(), commentOut.getMessage());
-        assertEquals(mockCommentEntity.getPostEntity().getId(), commentOut.getPostId());
+    public void constructor_WithUninitializedCommentEntity_Success() {
+        new CommentOut(null);
     }
 
     @Test
-    public void constructor_WithUninitializedCommentEntity_Success() {
-        CommentOut commentOut = new CommentOut(null);
+    public void constructor_WithoutRelations_Success() {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setMessage("test");
 
-        assertEquals(null, commentOut.getMessage());
-        assertEquals(null, commentOut.getPostId());
+        CommentOut commentOuts = new CommentOut(commentEntity);
+
+        assertEquals(commentEntity.getMessage(), commentOuts.getMessage());
+    }
+
+    @Test
+    public void constructor_WithRelations_Success() {
+        CommentEntity commentEntity = createWithRelations();
+        CommentOut commentOuts = new CommentOut(commentEntity);
+
+        assertEquals(commentEntity.getMessage(), commentOuts.getMessage());
+        assertEquals(commentEntity.getPostEntity().getId(), commentOuts.getPostId());
+    }
+
+    private CommentEntity createWithoutRelations() {
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setMessage("test");
+        return commentEntity;
+    }
+
+    private CommentEntity createWithRelations() {
+        CommentEntity commentEntity = createWithoutRelations();
+        commentEntity.setPostEntity(createPostEntity());
+        return commentEntity;
+    }
+
+    private PostEntity createPostEntity() {
+        PostEntity postEntity = new PostEntity();
+        postEntity.setId(1L);
+        return postEntity;
     }
 }

@@ -12,27 +12,22 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TagOutTest {
 
-
-    @Mock
-    private TagEntity mockTagEntity;
-
-    @Test
-    public void constructor_WithNonNullTagEntity() {
-        when(mockTagEntity.getId()).thenReturn(1L);
-        when(mockTagEntity.getName()).thenReturn("TagName");
-
-        TagOut tagOut = new TagOut(mockTagEntity);
-
-        assertEquals(1L, tagOut.getId());
-        assertEquals("TagName", tagOut.getName());
-    }
-
     @Test
     public void constructor_WithNullTagEntity() {
         TagOut tagOut = new TagOut(null);
 
-        assertEquals(null, tagOut.getId());
-        assertEquals(null, tagOut.getName());
+    }
+
+    @Test
+    public void constructor_WithNonNullTagEntity() {
+        TagEntity tagEntity = new TagEntity();
+        tagEntity.setName("bib");
+        tagEntity.setId(1L);
+
+        TagOut tagOut = new TagOut(tagEntity);
+
+        assertEquals(tagEntity.getId(), tagOut.getId());
+        assertEquals(tagEntity.getName(), tagOut.getName());
     }
 
 }

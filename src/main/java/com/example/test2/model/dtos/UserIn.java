@@ -1,5 +1,6 @@
 package com.example.test2.model.dtos;
 
+import com.example.test2.model.entities.ProfileEntity;
 import com.example.test2.model.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class UserIn {
         user.setPassword(this.getPassword());
         user.setAge(this.getAge());
         user.setEmail(this.getEmail());
+        user.setProfileEntity(profileIn.convertToEntity(new ProfileEntity()));
         return user;
     }
 }

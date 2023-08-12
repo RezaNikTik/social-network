@@ -47,7 +47,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public PostOut create(PostIn model) {
-        PostEntity postEntity = model.convertToPost(new PostEntity());
+        PostEntity postEntity = model.convertToEntity(new PostEntity());
         if (model.getPublishDate().isEqual(LocalDateTime.now())) {
             throw new CustomException("The time you entered is the same as the present time", 1003, HttpStatus.BAD_REQUEST);
         }
