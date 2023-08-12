@@ -16,7 +16,7 @@ public class PostOutTest {
 
 
     @Test
-    public void testConvertToPostWithNonNullEntity() {
+    public void convertToPost_WithNonNullEntity_Success() {
         PostEntity mockPostEntity = Mockito.mock(PostEntity.class);
         when(mockPostEntity.getTitle()).thenReturn("Test Title");
         LocalDateTime publishDate = LocalDateTime.of(2023, 5, 17, 10, 30);
@@ -29,7 +29,7 @@ public class PostOutTest {
     }
 
     @Test
-    public void testConvertToPostWithNullEntity() {
+    public void convertToPost_WithNullEntity_Success() {
         PostEntity mockPostEntity = null;
 
         PostOut postOut = new PostOut(mockPostEntity);

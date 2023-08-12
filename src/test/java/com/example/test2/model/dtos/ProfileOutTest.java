@@ -17,7 +17,7 @@ public class ProfileOutTest {
     private ProfileEntity mockProfileEntity;
 
     @Test
-    public void testConstructorWithNonNullProfileEntity() {
+    public void convertToProfile_WithNonNullProfileEntity() {
         when(mockProfileEntity.getId()).thenReturn(1L);
         when(mockProfileEntity.getCountry()).thenReturn("Country");
         when(mockProfileEntity.getCity()).thenReturn("City");
@@ -34,7 +34,7 @@ public class ProfileOutTest {
     }
 
     @Test
-    public void testConstructorWithNullProfileEntity() {
+    public void convertToProfile_WithNullProfileEntity_success() {
         ProfileOut profileOut = new ProfileOut(null);
 
         assertEquals(null, profileOut.getProfileId());

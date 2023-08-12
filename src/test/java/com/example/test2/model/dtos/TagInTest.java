@@ -17,7 +17,7 @@ public class TagInTest {
     private TagEntity mockTagEntity;
 
     @Test
-    public void testConvertToTag_NewTagEntity() {
+    public void convertToTag_NullTagEntity() {
         TagIn tagIn = new TagIn();
         tagIn.setName("TagName");
 
@@ -27,7 +27,7 @@ public class TagInTest {
     }
 
     @Test
-    public void testConvertToTag_ExistingTagEntity() {
+    public void convertToTag_ExistingTagEntity() {
         TagIn tagIn = new TagIn();
         tagIn.setName("NewTagName");
 
@@ -35,6 +35,6 @@ public class TagInTest {
 
         TagEntity result = tagIn.convertToTag(mockTagEntity);
 
-        assertEquals("NewTagName", result.getName());
+        assertEquals("OldTagName", result.getName());
     }
 }

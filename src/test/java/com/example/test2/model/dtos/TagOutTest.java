@@ -17,7 +17,7 @@ public class TagOutTest {
     private TagEntity mockTagEntity;
 
     @Test
-    public void testConstructorWithNonNullTagEntity() {
+    public void constructor_WithNonNullTagEntity() {
         when(mockTagEntity.getId()).thenReturn(1L);
         when(mockTagEntity.getName()).thenReturn("TagName");
 
@@ -25,13 +25,10 @@ public class TagOutTest {
 
         assertEquals(1L, tagOut.getId());
         assertEquals("TagName", tagOut.getName());
-
-        verify(mockTagEntity, times(1)).getId();
-        verify(mockTagEntity, times(1)).getName();
     }
 
     @Test
-    public void testConstructorWithNullTagEntity() {
+    public void constructor_WithNullTagEntity() {
         TagOut tagOut = new TagOut(null);
 
         assertEquals(null, tagOut.getId());

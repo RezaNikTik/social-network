@@ -3,6 +3,7 @@ package com.example.test2.model.dtos;
 import com.example.test2.model.entities.PostEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
@@ -14,20 +15,22 @@ import static org.mockito.Mockito.*;
 public class PostInTest {
 
 
+    @Mock
+    private PostEntity postEntity;
+
+
     @Test
     public void convertToPost_ValidInput_Success() {
         PostIn postIn = new PostIn();
         postIn.setTitle("Test title");
         postIn.setPublishDate(LocalDateTime.now());
 
-        PostEntity mockPostEntity = mock(PostEntity.class);
+        PostEntity post = new PostEntity();
 
-        PostEntity result = postIn.convertToPost(mockPostEntity);
+        PostEntity result = postIn.convertToPost(post);
 
         assertEquals(postIn.getTitle(), result.getTitle());
         assertEquals(postIn.getPublishDate(), result.getPublishDate());
-        verify(mockPostEntity, times(1)).setTitle(postIn.getTitle());
-        verify(mockPostEntity, times(1)).setPublishDate(postIn.getPublishDate());
     }
 
     @Test

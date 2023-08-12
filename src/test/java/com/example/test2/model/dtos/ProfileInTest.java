@@ -4,9 +4,17 @@ import com.example.test2.model.entities.ProfileEntity;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -14,55 +22,53 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProfileInTest {
 
+    @Test
+    public void convertToProfile_WithData_success() {
+        ProfileIn profile = new ProfileIn();
 
-    private ProfileIn profileIn;
+        profile.setZipCode("123");
+        profile.setCountry("USA");
+        profile.setCity("DC");
 
-    @Mock
-    private ProfileEntity mockProfileEntity;
+        ProfileEntity profileEntity = new ProfileEntity();
 
-    public void setUp() {
-        MockitoAnnotations.openMocks(this); // Initialize mocks
-        profileIn = new ProfileIn();
-        profileIn.setCountry("Country");
-        profileIn.setCity("City");
-        profileIn.setZipCode("12345");
+        ProfileEntity results = profile.convertToProfile(profileEntity);
+
+        assertEquals(profile.getCountry(), results.getCountry());
+        assertEquals(profile.getCity(), results.getCity());
+        assertEquals(profile.getZipCode(), results.getZipCode());
     }
 
     @Test
-    public void testConvertToProfile_NewProfileEntity() {
-        ProfileEntity result = profileIn.convertToProfile(null);
+    public void convertToProfile_WithNullProfileEntity_success() {
+        ProfileIn profile = new ProfileIn();
 
-        assertEquals("Country", result.getCountry());
-        assertEquals("City", result.getCity());
-        assertEquals("12345", result.getZipCode());
+        profile.setZipCode("123");
+        profile.setCountry("USA");
+        profile.setCity("DC");
+
+        ProfileEntity results = profile.convertToProfile(null);
+
+        assertEquals(profile.getCountry(), results.getCountry());
+        assertEquals(profile.getCity(), results.getCity());
+        assertEquals(profile.getZipCode(), results.getZipCode());
     }
 
     @Test
-    public void testConvertToProfile_ExistingProfileEntity() {
-        when(mockProfileEntity.getCountry()).thenReturn("OldCountry");
-        when(mockProfileEntity.getCity()).thenReturn("OldCity");
-        when(mockProfileEntity.getZipCode()).thenReturn("54321");
+    public void convertToProfile_WithNullZipCode_success() {
+        ProfileIn profile = new ProfileIn();
 
-        ProfileEntity result = profileIn.convertToProfile(mockProfileEntity);
+        profile.setZipCode(null);
+        profile.setCountry("USA");
+        profile.setCity("DC");
 
-        assertEquals("Country", result.getCountry());
-        assertEquals("City", result.getCity());
-        assertEquals("12345", result.getZipCode());
+        ProfileEntity results = profile.convertToProfile(null);
 
-        verify(mockProfileEntity, times(1)).setCountry("Country");
-        verify(mockProfileEntity, times(1)).setCity("City");
-        verify(mockProfileEntity, times(1)).setZipCode("12345");
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<ProfileIn>> violations = validator.validate(profile);
+        assertEquals(1, violations.size());
+        ConstraintViolation<ProfileIn> violation = violations.iterator().next();
+        assertEquals("your zipCode most not null", violation.getMessage());
     }
-
-    @Test
-    public void testConvertToProfile_Validation() {
-        profileIn.setZipCode(null);
-
-        ProfileEntity result = profileIn.convertToProfile(null);
-
-        assertEquals("Country", result.getCountry());
-        assertEquals("City", result.getCity());
-        assertEquals(null, result.getZipCode());
-    }
-
 }
