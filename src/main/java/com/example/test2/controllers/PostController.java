@@ -27,43 +27,48 @@ public class PostController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<PostOut>> list(){
+    public ResponseEntity<List<PostOut>> list() {
         return new ResponseEntity<>(postService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<PostOut> create(@Valid @RequestBody PostIn model, BindingResult bindingResult){
-        return  new ResponseEntity<>(postService.create(model),HttpStatus.OK);
+    public ResponseEntity<PostOut> create(@Valid @RequestBody PostIn model, BindingResult bindingResult) {
+        return new ResponseEntity<>(postService.create(model), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostOut> getById (@PathVariable("id")Long id){
-        return new ResponseEntity<>(postService.getById(id),HttpStatus.OK);
+    public ResponseEntity<PostOut> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById (@PathVariable("id")Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         postService.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateById(@PathVariable Long id,@RequestBody PostIn model){
+    public void updateById(@PathVariable Long id, @RequestBody PostIn model) {
         postService.updateById(id, model);
     }
 
 
     @GetMapping("/comment/{id}")
-    public ResponseEntity<List<CommentOut>> getAllCommentByPostId(@PathVariable Long id){
-        return new ResponseEntity<>(postService.getAllCommentByPostId(id),HttpStatus.OK);
+    public ResponseEntity<List<CommentOut>> getAllCommentByPostId(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.getAllCommentByPostId(id), HttpStatus.OK);
     }
 
     @PostMapping("/addTagToPost/{postId}/{tagId}")
-    public void addTagToPost(@PathVariable Long tagId,@PathVariable Long postId ){
+    public void addTagToPost(@PathVariable Long tagId, @PathVariable Long postId) {
         postService.addTagToPost(postId, tagId);
     }
 
     @GetMapping("/assignTagToPost/{postId}")
-    public List<TagOut> getAllTagAssignToPost(@PathVariable Long postId){
+    public List<TagOut> getAllTagAssignToPost(@PathVariable Long postId) {
         return postService.getAllTagAssignToPost(postId);
+    }
+
+    @GetMapping("/getAllPostEntity/{postId}")
+    public List<PostOut> getAllPostEntityWithRelationsByPostId(@PathVariable Long postId) {
+        return postService.getAllPostEntityWithRelationsByPostId(postId);
     }
 }

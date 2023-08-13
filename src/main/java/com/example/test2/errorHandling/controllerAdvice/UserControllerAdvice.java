@@ -20,27 +20,21 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class UserControllerAdvice extends ResponseEntityExceptionHandler  {
+public class UserControllerAdvice extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<Object> handelInternalService(CustomException e) {
-        return new ResponseEntity<Object>(new AppError(e.getMessage(), e.getCode(),LocalDateTime.now()),
+        return new ResponseEntity<Object>(new AppError(e.getMessage(), e.getCode(), LocalDateTime.now()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<List<ApiError>> constraintViolationException(ConstraintViolationException ex) {
         List<ApiError> errors = ex.getConstraintViolations().stream().map(error -> new ApiError(error.getMessage(),
-                error.getInvalidValue(),error.getLeafBean().toString())).toList();
-        return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+                error.getInvalidValue(), error.getLeafBean().toString())).toList();
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-
-
-
-
-
-
 
 
 }

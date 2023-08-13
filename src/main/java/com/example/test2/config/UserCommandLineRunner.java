@@ -1,10 +1,7 @@
 package com.example.test2.config;
 
 
-import com.example.test2.model.dtos.CommentIn;
-import com.example.test2.model.dtos.PostIn;
-import com.example.test2.model.dtos.TagIn;
-import com.example.test2.model.dtos.UserIn;
+import com.example.test2.model.dtos.*;
 import com.example.test2.services.CommentService;
 import com.example.test2.services.PostService;
 import com.example.test2.services.TagService;
@@ -33,15 +30,17 @@ public class UserCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       /* UserIn bob = new UserIn();
+        UserIn bob = new UserIn();
         bob.setFirstName("bob");
         bob.setLastName("boby");
         bob.setPassword("123");
         bob.setAge(25);
         bob.setEmail("bob@gmail.com");
-        bob.setCity("tehran");
-        bob.setCountry("iran");
-        bob.setZipCode("123456789");
+        ProfileIn profileBob = new ProfileIn();
+        profileBob.setCity("tehran");
+        profileBob.setCountry("iran");
+        profileBob.setZipCode("123456");
+        bob.setProfileIn(profileBob);
 
         UserIn tom = new UserIn();
         tom.setFirstName("tom");
@@ -49,9 +48,11 @@ public class UserCommandLineRunner implements CommandLineRunner {
         tom.setPassword("123");
         tom.setAge(26);
         tom.setEmail("tom@gmail.com");
-        tom.setCity("WD");
-        tom.setCountry("usa");
-        tom.setZipCode("987654321");
+        ProfileIn profileTom =new ProfileIn();
+        profileTom.setCity("WD");
+        profileTom.setCountry("usa");
+        profileTom.setZipCode("987654321");
+        tom.setProfileIn(profileTom);
 
         UserIn rum = new UserIn();
         rum.setFirstName("rum");
@@ -59,9 +60,11 @@ public class UserCommandLineRunner implements CommandLineRunner {
         rum.setPassword("123");
         rum.setAge(28);
         rum.setEmail("rum@gmail.com");
-        rum.setCity("city");
-        rum.setCountry("Mexico");
-        rum.setZipCode("456123789");
+        ProfileIn profilerum =new ProfileIn();
+        profilerum.setCity("city");
+        profilerum.setCountry("Mexico");
+        profilerum.setZipCode("456123789");
+        rum.setProfileIn(profilerum);
 
         service.create(bob);
         service.create(tom);
@@ -78,8 +81,6 @@ public class UserCommandLineRunner implements CommandLineRunner {
         tagService.create(tagIn);
         tagService.create(tagIn1);
 
-
-
         PostIn post = new  PostIn();
         post.setTitle("its great day");
         post.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
@@ -91,7 +92,6 @@ public class UserCommandLineRunner implements CommandLineRunner {
 
         postService.create(post);
         postService.create(post1);
-
 
         CommentIn comment = new CommentIn();
         comment.setMessage("joooon");
@@ -109,8 +109,5 @@ public class UserCommandLineRunner implements CommandLineRunner {
         commentService.create(comment);
         commentService.create(comment1);
         commentService.create(comment2);
-*/
-
-
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +23,10 @@ import java.util.Optional;
 public class PostServiceImp implements PostService {
 
     private final PostRepository postRepository;
-
-    private final CommentRepository commentRepository;
-
     private final TagRepository tagRepository;
 
-    public PostServiceImp(PostRepository profileRepository, CommentRepository commentRepository, TagRepository tagRepository) {
+    public PostServiceImp(PostRepository profileRepository, TagRepository tagRepository) {
         this.postRepository = profileRepository;
-        this.commentRepository = commentRepository;
         this.tagRepository = tagRepository;
     }
 
@@ -48,27 +43,21 @@ public class PostServiceImp implements PostService {
     @Override
     public PostOut create(PostIn model) {
         PostEntity postEntity = model.convertToEntity(new PostEntity());
-        if (model.getPublishDate().isEqual(LocalDateTime.now())) {
-            throw new CustomException("The time you entered is the same as the present time", 1003, HttpStatus.BAD_REQUEST);
-        }
-        if (model.getPublishDate().isBefore(LocalDateTime.now())) {
-            throw new CustomException("The time you entered is less than the current time", 1003, HttpStatus.BAD_REQUEST);
-        }
         PostEntity newPostEntity = postRepository.save(postEntity);
         return new PostOut(newPostEntity);
     }
 
     @Override
     public void deleteById(Long id) throws CustomException {
-        showMessageForNotValidId(id);
+        Optional<PostEntity> optionalPost = postRepository.findById(id);
+        showMessageForNotValidId(optionalPost);
         postRepository.deleteById(id);
     }
 
     @Override
     public PostOut getById(Long id) throws CustomException {
-        Optional<PostEntity> post = postRepository.findById(id);
-        showMessageForNotValidId(id);
-        return new PostOut(post.get());
+        PostEntity postEntity = showMessageForNotValidId(id);
+        return new PostOut(postEntity);
     }
 
     public void updateById(Long id, PostIn model) {
@@ -78,8 +67,6 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<CommentOut> getAllCommentByPostId(Long postId) {
-//        List<CommentEntity>list = commentRepository.findAll();
-//        CommentOut comment= list.stream().map(CommentOut::new).toList();
         return postRepository.getAllCommentByPostId(postId).stream().map(CommentOut::new).toList();
     }
 
@@ -99,13 +86,22 @@ public class PostServiceImp implements PostService {
 
     }
 
+    @Override
+    public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId) {
+        return postRepository.getAllPostEntityWithRelationsByPostId(postId).stream().map(PostOut::new).toList();
+    }
+
 
     private PostEntity showMessageForNotValidId(Long id) {
-        Optional<PostEntity> comment = postRepository.findById(id);
-        if (comment.isEmpty()) {
+        Optional<PostEntity> optionalPost = postRepository.findById(id);
+        return showMessageForNotValidId(optionalPost);
+    }
+
+    private PostEntity showMessageForNotValidId(Optional<PostEntity> optionalPost) {
+        if (optionalPost.isEmpty()) {
             throw new CustomException("The ID you entered does not exist", 1001, HttpStatus.NOT_FOUND);
         }
-        return comment.get();
+        return optionalPost.get();
     }
 
 }

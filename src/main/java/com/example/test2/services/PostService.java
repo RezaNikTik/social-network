@@ -27,5 +27,7 @@ public interface PostService {
 
     List<TagOut> getAllTagAssignToPost(@PathVariable Long postId);
 
+    List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId);
+
 
 }

@@ -189,6 +189,12 @@ public class PostServiceImpTest {
     }
 
     @Test
+    public void getAllPostEntityWithRelationsByPostId() {
+        when(postRepository.getAllPostEntityWithRelationsByPostId(1L)).thenReturn(this.postEntities(5));
+        postServiceImp.getAllPostEntityWithRelationsByPostId(1L);
+    }
+
+    @Test
     public void getAllTagAssignToPost_exception() {
         when(postRepository.findById(2L)).thenReturn(Optional.empty());
         CustomException exception = assertThrows(CustomException.class,
@@ -215,5 +221,4 @@ public class PostServiceImpTest {
         }
         return postEntities;
     }
-
 }
