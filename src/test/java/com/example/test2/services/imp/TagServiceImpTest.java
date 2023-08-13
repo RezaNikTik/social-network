@@ -36,7 +36,7 @@ public class TagServiceImpTest {
     public void getAll_success() {
         List<TagEntity> list = tagEntities(5);
         when(tagRepository.findAll()).thenReturn(list);
-        List<TagOut> tag = tagServiceImp.getAll();
+        List<TagOut> tag = tagServiceImp.getAll(5);
         assertNotNull(tag);
         assertEquals(list.size(), tag.size());
     }
@@ -45,7 +45,7 @@ public class TagServiceImpTest {
     public void getAll_dontHaveAnyData_exception() {
         List<TagEntity> tagEntities = new ArrayList<>();
         when(tagRepository.findAll()).thenReturn(tagEntities);
-        CustomException exception = assertThrows(CustomException.class, () -> tagServiceImp.getAll());
+        CustomException exception = assertThrows(CustomException.class, () -> tagServiceImp.getAll(5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

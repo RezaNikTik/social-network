@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserOut> getAll();
+    List<UserOut> getAll(Integer pageCount);
 
     UserOut create(UserIn model);
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PostService {
 
-    List<PostOut> getAll();
+    List<PostOut> getAll(Integer pageCount);
 
     PostOut create(PostIn model);
 

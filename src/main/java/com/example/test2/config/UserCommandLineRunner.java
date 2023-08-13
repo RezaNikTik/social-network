@@ -87,11 +87,33 @@ public class UserCommandLineRunner implements CommandLineRunner {
 
 
         PostIn post1 = new  PostIn();
-        post1.setTitle("its great day");
+        post1.setTitle("its bad day");
         post1.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+
+        PostIn post2 = new  PostIn();
+        post2.setTitle("its great day");
+        post2.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
+
+
+        PostIn post3 = new  PostIn();
+        post3.setTitle("its bad day");
+        post3.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+
+        PostIn post4 = new  PostIn();
+        post4.setTitle("its great day");
+        post4.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
+
+
+        PostIn post5 = new  PostIn();
+        post5.setTitle("its bad day");
+        post5.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
 
         postService.create(post);
         postService.create(post1);
+        postService.create(post2);
+        postService.create(post3);
+        postService.create(post4);
+        postService.create(post5);
 
         CommentIn comment = new CommentIn();
         comment.setMessage("joooon");

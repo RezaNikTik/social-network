@@ -26,9 +26,9 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<PostOut>> list() {
-        return new ResponseEntity<>(postService.getAll(), HttpStatus.OK);
+    @GetMapping("/{pageCount}")
+    public ResponseEntity<List<PostOut>> list(@PathVariable Integer pageCount) {
+        return new ResponseEntity<>(postService.getAll(pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -36,7 +36,7 @@ public class PostController {
         return new ResponseEntity<>(postService.create(model), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<PostOut> getById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(postService.getById(id), HttpStatus.OK);
     }

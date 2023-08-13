@@ -45,7 +45,7 @@ public class UserServiceImpTest {
     public void getAll_success() {
         List<UserEntity> list = this.userEntities(5);
         Mockito.when(userRepository.findAll()).thenReturn(list);
-        List<UserOut> userOuts = userServiceImp.getAll();
+        List<UserOut> userOuts = userServiceImp.getAll(5);
         assertNotNull(userOuts);
         assertEquals(list.size(), userOuts.size());
     }
@@ -54,7 +54,7 @@ public class UserServiceImpTest {
     public void getAll_dontHaveAnyData_exception() {
         List<UserEntity> list = new ArrayList<>();
         Mockito.when(userRepository.findAll()).thenReturn(list);
-        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll());
+        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

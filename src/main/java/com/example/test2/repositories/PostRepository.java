@@ -5,6 +5,7 @@ import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.CommentEntity;
 import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -43,6 +44,7 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     Set<TagEntity> getAllTagAssignToPost(@Param("postId") Long postId);
 
     @Modifying
-    @Query("select distinct p from post p join fetch p.commentEntityPost comments join fetch p.tagEntity where p.id = :postId")
+    @Query("select distinct p from post p join fetch p.commentEntityPost comments join fetch p.tagEntity " +
+            "where p.id = :postId")
     List<PostEntity> getAllPostEntityWithRelationsByPostId(Long postId);
 }

@@ -19,9 +19,9 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<TagOut>> getAll(){
-        return new ResponseEntity<>(tagService.getAll(), HttpStatus.OK);
+    @GetMapping("{pageCount}")
+    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer pageCount){
+        return new ResponseEntity<>(tagService.getAll(pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -29,7 +29,7 @@ public class TagController {
         return new ResponseEntity<>(tagService.create(model),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<TagOut> getById(@PathVariable Long id){
         return new ResponseEntity<>(tagService.getById(id),HttpStatus.OK);
     }

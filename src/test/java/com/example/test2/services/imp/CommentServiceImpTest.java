@@ -41,7 +41,7 @@ public class CommentServiceImpTest {
     public void getAll_success() {
         List<CommentEntity> commentEntities = createCommentEntities(5);
         Mockito.doReturn(commentEntities).when(commentRepository).findAll();
-        List<CommentOut> comments = commentServiceImp.getAll();
+        List<CommentOut> comments = commentServiceImp.getAll(5);
         assertNotNull(comments);
         assertEquals(commentEntities.size(), comments.size());
     }
@@ -51,7 +51,7 @@ public class CommentServiceImpTest {
         Mockito.doReturn(new ArrayList<>()).when(commentRepository).findAll();
 
         CustomException exception = assertThrows(CustomException.class,
-                () -> commentServiceImp.getAll());
+                () -> commentServiceImp.getAll(5));
 
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());

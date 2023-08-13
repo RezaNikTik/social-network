@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TagService {
 
-    List<TagOut> getAll();
+    List<TagOut> getAll(Integer pageCount);
 
     TagOut create(TagIn model);
 

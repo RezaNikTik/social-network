@@ -8,6 +8,8 @@ import com.example.test2.model.entities.PostEntity;
 import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.services.CommentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +28,12 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public List<CommentOut> getAll() {
-        List<CommentEntity> list = commentRepository.findAll();
-        if (list.isEmpty()) {
+    public List<CommentOut> getAll(Integer pageCount) {
+        Page<CommentEntity> lists = commentRepository.findAll(Pageable.ofSize(pageCount));
+        if (lists.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
-        return list.stream().map(CommentOut::new).toList();
+        return lists.stream().map(CommentOut::new).toList();
     }
 
     @Override

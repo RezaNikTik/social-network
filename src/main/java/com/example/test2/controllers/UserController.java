@@ -24,9 +24,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<UserOut>> getAll() {
-        return new ResponseEntity<>(userService.getAll(),HttpStatus.OK);
+    @GetMapping("/{pageCount}")
+    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer pageCount) {
+        return new ResponseEntity<>(userService.getAll(pageCount),HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -39,7 +39,7 @@ public class UserController {
         userService.deleteById(id);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public  ResponseEntity<UserOut> getById(@PathVariable(value = "id") long id) throws CustomException {
         return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
     }

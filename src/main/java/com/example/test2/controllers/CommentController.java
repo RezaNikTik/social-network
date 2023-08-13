@@ -22,9 +22,9 @@ public class CommentController {
 
 
 
-    @GetMapping("")
-    public ResponseEntity<List<CommentOut>> list(){
-       return new ResponseEntity<>(commentService.getAll(),HttpStatus.OK) ;
+    @GetMapping("/{pageCount}")
+    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer pageCount){
+       return new ResponseEntity<>(commentService.getAll(pageCount),HttpStatus.OK) ;
     }
 
     @PostMapping("")
@@ -32,7 +32,7 @@ public class CommentController {
         return new ResponseEntity<>(commentService.create(model),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<CommentOut> getById (@PathVariable("id")Long id){
         return new ResponseEntity<>(commentService.getById(id),HttpStatus.OK);
     }

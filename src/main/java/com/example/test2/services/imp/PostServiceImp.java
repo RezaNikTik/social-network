@@ -7,15 +7,16 @@ import com.example.test2.model.dtos.PostOut;
 import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.PostEntity;
 import com.example.test2.model.entities.TagEntity;
-import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +33,12 @@ public class PostServiceImp implements PostService {
 
 
     @Override
-    public List<PostOut> getAll() {
-        List<PostEntity> list = postRepository.findAll();
-        if (list.isEmpty()) {
+    public List<PostOut> getAll(Integer pageCount) {
+        Page<PostEntity> postOutPages = postRepository.findAll(Pageable.ofSize(pageCount));
+        if (postOutPages.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
-        return list.stream().map(PostOut::new).toList();
+        return postOutPages.stream().map(PostOut::new).toList();
     }
 
     @Override
@@ -83,11 +84,14 @@ public class PostServiceImp implements PostService {
     public List<TagOut> getAllTagAssignToPost(Long postId) {
         showMessageForNotValidId(postId);
         return postRepository.getAllTagAssignToPost(postId).stream().map(TagOut::new).toList();
-
     }
 
     @Override
-    public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId) {
+    public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId ) {
+        Optional<PostEntity> postOut = postRepository.findById(postId);
+        if (postOut.isEmpty()) {
+            throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
+        }
         return postRepository.getAllPostEntityWithRelationsByPostId(postId).stream().map(PostOut::new).toList();
     }
 

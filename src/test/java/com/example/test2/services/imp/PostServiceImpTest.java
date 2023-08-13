@@ -9,13 +9,11 @@ import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.repositories.TagRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest(PostServiceImp.class)
@@ -48,7 +44,7 @@ public class PostServiceImpTest {
     public void getAll_success() {
         List<PostEntity> postEntity = postEntities(5);
         when(postRepository.findAll()).thenReturn(postEntity);
-        List<PostOut> postOuts = postServiceImp.getAll();
+        List<PostOut> postOuts = postServiceImp.getAll(5);
         assertNotNull(postOuts);
         assertEquals(postEntity.size(), postOuts.size());
 
@@ -59,7 +55,7 @@ public class PostServiceImpTest {
         List<PostEntity> postEntities = new ArrayList<>();
         when(postRepository.findAll()).thenReturn(postEntities);
         CustomException exception = assertThrows(CustomException.class,
-                () -> postServiceImp.getAll());
+                () -> postServiceImp.getAll(5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
