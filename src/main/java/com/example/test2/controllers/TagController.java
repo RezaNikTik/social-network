@@ -19,9 +19,9 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping("{pageCount}")
-    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer pageCount){
-        return new ResponseEntity<>(tagService.getAll(pageCount), HttpStatus.OK);
+    @GetMapping("/{size}/{pageCount}")
+    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer size,@PathVariable Integer pageCount){
+        return new ResponseEntity<>(tagService.getAll(size,pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")

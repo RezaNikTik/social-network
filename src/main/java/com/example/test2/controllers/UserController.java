@@ -24,9 +24,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{pageCount}")
-    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer pageCount) {
-        return new ResponseEntity<>(userService.getAll(pageCount),HttpStatus.OK);
+    @GetMapping("/{size}/{pageCount}")
+    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer size,@PathVariable Integer pageCount) {
+        return new ResponseEntity<>(userService.getAll(size,pageCount),HttpStatus.OK);
     }
 
     @PostMapping("")

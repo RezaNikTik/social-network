@@ -22,9 +22,9 @@ public class CommentController {
 
 
 
-    @GetMapping("/{pageCount}")
-    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer pageCount){
-       return new ResponseEntity<>(commentService.getAll(pageCount),HttpStatus.OK) ;
+    @GetMapping("/{size}/{pageCount}")
+    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer size,@PathVariable Integer pageCount){
+       return new ResponseEntity<>(commentService.getAll(size,pageCount),HttpStatus.OK) ;
     }
 
     @PostMapping("")

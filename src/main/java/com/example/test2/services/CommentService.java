@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentService {
 
 
-    List<CommentOut> getAll(Integer pageCount);
+    List<CommentOut> getAll(Integer size,Integer pageCount);
 
     CommentOut create(CommentIn model);
 

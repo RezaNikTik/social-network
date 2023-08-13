@@ -7,6 +7,7 @@ import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,9 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
-    public List<TagOut> getAll(Integer pageCount) {
-        Page<TagEntity> list = tagRepository.findAll(Pageable.ofSize(pageCount));
+    public List<TagOut> getAll(Integer size,Integer pageCount) {
+        Pageable  pageable = PageRequest.of(size,pageCount);
+        Page<TagEntity> list = tagRepository.findAll(pageable);
         if (list.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }

@@ -10,6 +10,7 @@ import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
 import com.example.test2.services.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -35,8 +36,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserOut> getAll(Integer pageCount) {
-        Page<UserEntity> userEntities = userRepository.findAll(Pageable.ofSize(pageCount));
+    public List<UserOut> getAll(Integer size,Integer pageCount) {
+        Pageable  pageable = PageRequest.of(size,pageCount);
+        Page<UserEntity> userEntities = userRepository.findAll(pageable);
         if (userEntities.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }

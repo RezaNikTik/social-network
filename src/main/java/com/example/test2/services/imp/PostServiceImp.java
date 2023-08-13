@@ -33,8 +33,9 @@ public class PostServiceImp implements PostService {
 
 
     @Override
-    public List<PostOut> getAll(Integer pageCount) {
-        Page<PostEntity> postOutPages = postRepository.findAll(Pageable.ofSize(pageCount));
+    public List<PostOut> getAll(Integer size,Integer pageCount) {
+        Pageable  pageable = PageRequest.of(size,pageCount);
+        Page<PostEntity> postOutPages = postRepository.findAll(pageable);
         if (postOutPages.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }

@@ -44,7 +44,7 @@ public class PostServiceImpTest {
     public void getAll_success() {
         List<PostEntity> postEntity = postEntities(5);
         when(postRepository.findAll()).thenReturn(postEntity);
-        List<PostOut> postOuts = postServiceImp.getAll(5);
+        List<PostOut> postOuts = postServiceImp.getAll(, 5);
         assertNotNull(postOuts);
         assertEquals(postEntity.size(), postOuts.size());
 
@@ -55,7 +55,7 @@ public class PostServiceImpTest {
         List<PostEntity> postEntities = new ArrayList<>();
         when(postRepository.findAll()).thenReturn(postEntities);
         CustomException exception = assertThrows(CustomException.class,
-                () -> postServiceImp.getAll(5));
+                () -> postServiceImp.getAll(, 5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

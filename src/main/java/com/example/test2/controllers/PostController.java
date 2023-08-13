@@ -26,9 +26,9 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/{pageCount}")
-    public ResponseEntity<List<PostOut>> list(@PathVariable Integer pageCount) {
-        return new ResponseEntity<>(postService.getAll(pageCount), HttpStatus.OK);
+    @GetMapping("/{size}/{pageCount}")
+    public ResponseEntity<List<PostOut>> list(@PathVariable Integer size,@PathVariable Integer pageCount) {
+        return new ResponseEntity<>(postService.getAll(size, pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
