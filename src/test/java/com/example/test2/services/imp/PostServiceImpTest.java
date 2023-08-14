@@ -48,7 +48,7 @@ public class PostServiceImpTest {
         List<PostEntity> postEntity = postEntities(5);
         Page<PostEntity> postEntities = new PageImpl<>(postEntity);
         when(postRepository.findAll(any(Pageable.class))).thenReturn(postEntities);
-        List<PostOut> postOuts = postServiceImp.getAll(0, 5);
+        List<PostOut> postOuts = postServiceImp.getAll(any(Pageable.class));
         assertNotNull(postOuts);
         assertEquals(postEntity.size(), postOuts.size());
 
@@ -60,7 +60,7 @@ public class PostServiceImpTest {
         Page<PostEntity> entityPages = new PageImpl<>(postEntities);
         when(postRepository.findAll(any(Pageable.class))).thenReturn(entityPages);
         CustomException exception = assertThrows(CustomException.class,
-                () -> postServiceImp.getAll(0, 5));
+                () -> postServiceImp.getAll(any(Pageable.class)));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

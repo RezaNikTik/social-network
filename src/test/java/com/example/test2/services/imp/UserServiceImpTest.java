@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest(UserServiceImp.class)
@@ -49,7 +50,7 @@ public class UserServiceImpTest {
         List<UserEntity> list = this.userEntities(5);
         Page<UserEntity> entityPage = new PageImpl<>(list);
         Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
-        List<UserOut> userOuts = userServiceImp.getAll(0, 5);
+        List<UserOut> userOuts = userServiceImp.getAll(any(Pageable.class));
         assertNotNull(userOuts);
         assertEquals(list.size(), userOuts.size());
     }
@@ -59,7 +60,7 @@ public class UserServiceImpTest {
         List<UserEntity> list = new ArrayList<>();
         Page<UserEntity> entityPage = new PageImpl<>(list);
         Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
-        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(0, 5));
+        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(any(Pageable.class)));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

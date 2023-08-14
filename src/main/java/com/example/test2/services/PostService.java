@@ -5,13 +5,14 @@ import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.model.dtos.PostIn;
 import com.example.test2.model.dtos.PostOut;
 import com.example.test2.model.dtos.TagOut;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 public interface PostService {
 
-    List<PostOut> getAll(Integer size, Integer pageCount);
+    List<PostOut> getAll(Pageable pageable);
 
     PostOut create(PostIn model);
 

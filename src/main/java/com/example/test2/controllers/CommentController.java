@@ -3,6 +3,7 @@ package com.example.test2.controllers;
 import com.example.test2.model.dtos.CommentIn;
 import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.services.CommentService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,9 +22,9 @@ public class CommentController {
     }
 
 
-    @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer size, @PathVariable Integer pageCount) {
-        return new ResponseEntity<>(commentService.getAll(size, pageCount), HttpStatus.OK);
+    @GetMapping("")
+    public ResponseEntity<List<CommentOut>> list(Pageable pageable) {
+        return new ResponseEntity<>(commentService.getAll(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")

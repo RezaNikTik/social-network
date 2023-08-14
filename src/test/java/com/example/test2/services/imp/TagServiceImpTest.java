@@ -40,7 +40,7 @@ public class TagServiceImpTest {
         List<TagEntity> list = tagEntities(5);
         Page<TagEntity> entityPage = new PageImpl<>(list);
         when(tagRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
-        List<TagOut> tag = tagServiceImp.getAll(0, 5);
+        List<TagOut> tag = tagServiceImp.getAll(any(Pageable.class));
         assertNotNull(tag);
         assertEquals(list.size(), tag.size());
     }
@@ -50,7 +50,7 @@ public class TagServiceImpTest {
         List<TagEntity> tagEntities = new ArrayList<>();
         Page<TagEntity> entityPage = new PageImpl<>(tagEntities);
         when(tagRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
-        CustomException exception = assertThrows(CustomException.class, () -> tagServiceImp.getAll(0, 5));
+        CustomException exception = assertThrows(CustomException.class, () -> tagServiceImp.getAll(any(Pageable.class)));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

@@ -4,6 +4,7 @@ import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.UserIn;
 import com.example.test2.model.dtos.UserOut;
 import com.example.test2.services.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,9 +25,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer size, @PathVariable Integer pageCount) {
-        return new ResponseEntity<>(userService.getAll(size, pageCount), HttpStatus.OK);
+    @GetMapping("")
+    public ResponseEntity<List<UserOut>> getAll(Pageable pageable) {
+        return new ResponseEntity<>(userService.getAll(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")

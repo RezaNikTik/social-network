@@ -82,31 +82,31 @@ public class UserCommandLineRunner implements CommandLineRunner {
         tagService.create(tagIn1);
 
         PostIn post = new PostIn();
-        post.setTitle("its great day");
+        post.setTitle("its great day 01");
         post.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
 
 
         PostIn post1 = new PostIn();
-        post1.setTitle("its bad day");
-        post1.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+        post1.setTitle("its great day 06");
+        post1.setPublishDate(LocalDateTime.parse("2024-05-22T20:30:00"));
 
         PostIn post2 = new PostIn();
-        post2.setTitle("its great day");
-        post2.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
+        post2.setTitle("its great day 04");
+        post2.setPublishDate(LocalDateTime.parse("2024-06-22T20:30:00"));
 
 
         PostIn post3 = new PostIn();
-        post3.setTitle("its bad day");
-        post3.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+        post3.setTitle("its great day 03");
+        post3.setPublishDate(LocalDateTime.parse("2024-07-22T20:30:00"));
 
         PostIn post4 = new PostIn();
-        post4.setTitle("its great day");
-        post4.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
+        post4.setTitle("its great day 02");
+        post4.setPublishDate(LocalDateTime.parse("2024-08-22T20:30:00"));
 
 
         PostIn post5 = new PostIn();
-        post5.setTitle("its bad day");
-        post5.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
+        post5.setTitle("its great day 05");
+        post5.setPublishDate(LocalDateTime.parse("2024-09-22T20:30:00"));
 
         postService.create(post);
         postService.create(post1);

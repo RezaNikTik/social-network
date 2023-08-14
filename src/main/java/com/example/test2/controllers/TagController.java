@@ -3,6 +3,7 @@ package com.example.test2.controllers;
 import com.example.test2.model.dtos.TagIn;
 import com.example.test2.model.dtos.TagOut;
 import com.example.test2.services.TagService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,9 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer size, @PathVariable Integer pageCount) {
-        return new ResponseEntity<>(tagService.getAll(size, pageCount), HttpStatus.OK);
+    @GetMapping("")
+    public ResponseEntity<List<TagOut>> getAll(Pageable pageable) {
+        return new ResponseEntity<>(tagService.getAll(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")
