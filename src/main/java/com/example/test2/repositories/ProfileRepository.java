@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
-public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
+public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
 
     @Transactional
@@ -17,5 +17,5 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
     @Query("update profile p set p.city=:#{#user.profileIn.city},p.zipCode=:#{#user.profileIn.zipCode}," +
             "p.country=:#{#user.profileIn.country} " +
             "where p.userEntity.id=:profileId")
-    void updateById (@Param("profileId")Long profileId, UserIn user);
+    void updateById(@Param("profileId") Long profileId, UserIn user);
 }

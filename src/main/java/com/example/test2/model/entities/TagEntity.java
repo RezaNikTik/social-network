@@ -23,17 +23,16 @@ public class TagEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name",nullable = false,length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
 
     @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tag_post",
-                joinColumns = @JoinColumn(name = "tag_id",referencedColumnName ="id"),
-                inverseJoinColumns = @JoinColumn(name = "post_id"))
+            joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
     Set<PostEntity> postEntity = new HashSet<>();
-
 
 
 }

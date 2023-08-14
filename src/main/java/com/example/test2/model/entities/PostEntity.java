@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,11 +27,11 @@ public class PostEntity {
     private LocalDateTime publishDate;
 
     @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @ManyToMany(mappedBy = "postEntity",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
     @JsonIgnore
-    Set<TagEntity> tagEntity= new HashSet<>();
+    Set<TagEntity> tagEntity = new HashSet<>();
 
-    @OneToMany(mappedBy = "postEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL)
     private Set<CommentEntity> commentEntityPost;
 
 

@@ -12,6 +12,10 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -40,18 +44,20 @@ public class CommentServiceImpTest {
     @Test
     public void getAll_success() {
         List<CommentEntity> commentEntities = createCommentEntities(5);
-        Mockito.doReturn(commentEntities).when(commentRepository).findAll();
-        List<CommentOut> comments = commentServiceImp.getAll(5);
+        Page<CommentEntity> entityPage = new PageImpl<>(commentEntities);
+        when(commentRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
+        List<CommentOut> comments = commentServiceImp.getAll(0, 3);
         assertNotNull(comments);
         assertEquals(commentEntities.size(), comments.size());
     }
 
     @Test
     public void getAll_dontHaveAnyData_exception() throws CustomException {
-        Mockito.doReturn(new ArrayList<>()).when(commentRepository).findAll();
-
+        List<CommentEntity> list = new ArrayList<>();
+        Page<CommentEntity> entityPage = new PageImpl<>(list);
+        when(commentRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
         CustomException exception = assertThrows(CustomException.class,
-                () -> commentServiceImp.getAll(5));
+                () -> commentServiceImp.getAll(0, 5));
 
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
@@ -65,9 +71,11 @@ public class CommentServiceImpTest {
         commentIn.setMessage("broooooo");
         when(postRepository.findById(1L)).thenReturn(Optional.of(new PostEntity()));
         CommentEntity savedCommentEntity = new CommentEntity();
+        savedCommentEntity.setMessage(commentIn.getMessage());
+        savedCommentEntity.setPostEntity(this.createPostEntity());
         when(commentRepository.save(any(CommentEntity.class))).thenReturn(savedCommentEntity);
         CommentOut createdComment = commentServiceImp.create(commentIn);
-        assertEquals("broooooo", commentIn.getMessage());
+        assertEquals(savedCommentEntity.getMessage(), createdComment.getMessage());
     }
 
     @Test
@@ -138,6 +146,7 @@ public class CommentServiceImpTest {
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setId(1L);
         commentEntity.setMessage("bia");
+        commentEntity.setPostEntity(this.createPostEntity());
         return commentEntity;
     }
 

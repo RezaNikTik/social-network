@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -20,8 +21,8 @@ public class ProfileIn {
 
 
     public ProfileEntity convertToEntity(ProfileEntity profileEntity) {
-        if (profileEntity == null){
-            profileEntity=new ProfileEntity();
+        if (profileEntity == null) {
+            profileEntity = new ProfileEntity();
         }
         profileEntity.setCity(this.getCity());
         profileEntity.setCountry(this.getCountry());

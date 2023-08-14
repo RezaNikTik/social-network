@@ -21,30 +21,29 @@ public class CommentController {
     }
 
 
-
     @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer size,@PathVariable Integer pageCount){
-       return new ResponseEntity<>(commentService.getAll(size,pageCount),HttpStatus.OK) ;
+    public ResponseEntity<List<CommentOut>> list(@PathVariable Integer size, @PathVariable Integer pageCount) {
+        return new ResponseEntity<>(commentService.getAll(size, pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<CommentOut> create(@RequestBody CommentIn model, BindingResult bindingResult){
-        return new ResponseEntity<>(commentService.create(model),HttpStatus.OK);
+    public ResponseEntity<CommentOut> create(@RequestBody CommentIn model, BindingResult bindingResult) {
+        return new ResponseEntity<>(commentService.create(model), HttpStatus.OK);
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<CommentOut> getById (@PathVariable("id")Long id){
-        return new ResponseEntity<>(commentService.getById(id),HttpStatus.OK);
+    public ResponseEntity<CommentOut> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(commentService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById (@PathVariable("id")Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         commentService.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateById(@PathVariable Long id,@RequestBody CommentIn model){
-        commentService.updateById(id,model);
+    public void updateById(@PathVariable Long id, @RequestBody CommentIn model) {
+        commentService.updateById(id, model);
     }
 
 

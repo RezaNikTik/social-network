@@ -48,7 +48,7 @@ public class UserCommandLineRunner implements CommandLineRunner {
         tom.setPassword("123");
         tom.setAge(26);
         tom.setEmail("tom@gmail.com");
-        ProfileIn profileTom =new ProfileIn();
+        ProfileIn profileTom = new ProfileIn();
         profileTom.setCity("WD");
         profileTom.setCountry("usa");
         profileTom.setZipCode("987654321");
@@ -60,7 +60,7 @@ public class UserCommandLineRunner implements CommandLineRunner {
         rum.setPassword("123");
         rum.setAge(28);
         rum.setEmail("rum@gmail.com");
-        ProfileIn profilerum =new ProfileIn();
+        ProfileIn profilerum = new ProfileIn();
         profilerum.setCity("city");
         profilerum.setCountry("Mexico");
         profilerum.setZipCode("456123789");
@@ -70,41 +70,41 @@ public class UserCommandLineRunner implements CommandLineRunner {
         service.create(tom);
         service.create(rum);
 
-        TagIn tagIn=new TagIn();
+        TagIn tagIn = new TagIn();
         tagIn.setName("electric");
 
 
-        TagIn tagIn1=new TagIn();
+        TagIn tagIn1 = new TagIn();
         tagIn1.setName("day");
 
 
         tagService.create(tagIn);
         tagService.create(tagIn1);
 
-        PostIn post = new  PostIn();
+        PostIn post = new PostIn();
         post.setTitle("its great day");
         post.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
 
 
-        PostIn post1 = new  PostIn();
+        PostIn post1 = new PostIn();
         post1.setTitle("its bad day");
         post1.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
 
-        PostIn post2 = new  PostIn();
+        PostIn post2 = new PostIn();
         post2.setTitle("its great day");
         post2.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
 
 
-        PostIn post3 = new  PostIn();
+        PostIn post3 = new PostIn();
         post3.setTitle("its bad day");
         post3.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
 
-        PostIn post4 = new  PostIn();
+        PostIn post4 = new PostIn();
         post4.setTitle("its great day");
         post4.setPublishDate(LocalDateTime.parse("2024-04-22T20:30:00"));
 
 
-        PostIn post5 = new  PostIn();
+        PostIn post5 = new PostIn();
         post5.setTitle("its bad day");
         post5.setPublishDate(LocalDateTime.parse("2025-04-22T20:30:00"));
 

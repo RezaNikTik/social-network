@@ -36,8 +36,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserOut> getAll(Integer size,Integer pageCount) {
-        Pageable  pageable = PageRequest.of(size,pageCount);
+    public List<UserOut> getAll(Integer size, Integer pageCount) {
+        Pageable pageable = PageRequest.of(size, pageCount);
         Page<UserEntity> userEntities = userRepository.findAll(pageable);
         if (userEntities.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);

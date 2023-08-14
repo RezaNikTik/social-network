@@ -10,7 +10,7 @@ import javax.validation.Path;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ApiError{
+public class ApiError {
 
     private String message;
 

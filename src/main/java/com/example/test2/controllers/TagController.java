@@ -20,27 +20,27 @@ public class TagController {
     }
 
     @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer size,@PathVariable Integer pageCount){
-        return new ResponseEntity<>(tagService.getAll(size,pageCount), HttpStatus.OK);
+    public ResponseEntity<List<TagOut>> getAll(@PathVariable Integer size, @PathVariable Integer pageCount) {
+        return new ResponseEntity<>(tagService.getAll(size, pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<TagOut> create(@RequestBody TagIn model){
-        return new ResponseEntity<>(tagService.create(model),HttpStatus.OK);
+    public ResponseEntity<TagOut> create(@RequestBody TagIn model) {
+        return new ResponseEntity<>(tagService.create(model), HttpStatus.OK);
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<TagOut> getById(@PathVariable Long id){
-        return new ResponseEntity<>(tagService.getById(id),HttpStatus.OK);
+    public ResponseEntity<TagOut> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(tagService.getById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         tagService.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateById(@PathVariable Long id,@RequestBody TagIn tagIn){
+    public void updateById(@PathVariable Long id, @RequestBody TagIn tagIn) {
         tagService.updateById(id, tagIn);
     }
 }

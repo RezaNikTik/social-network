@@ -25,8 +25,8 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
-    public List<TagOut> getAll(Integer size,Integer pageCount) {
-        Pageable  pageable = PageRequest.of(size,pageCount);
+    public List<TagOut> getAll(Integer size, Integer pageCount) {
+        Pageable pageable = PageRequest.of(size, pageCount);
         Page<TagEntity> list = tagRepository.findAll(pageable);
         if (list.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);

@@ -27,7 +27,7 @@ public class PostController {
     }
 
     @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<PostOut>> list(@PathVariable Integer size,@PathVariable Integer pageCount) {
+    public ResponseEntity<List<PostOut>> list(@PathVariable Integer size, @PathVariable Integer pageCount) {
         return new ResponseEntity<>(postService.getAll(size, pageCount), HttpStatus.OK);
     }
 
@@ -51,11 +51,6 @@ public class PostController {
         postService.updateById(id, model);
     }
 
-
-    @GetMapping("/comment/{id}")
-    public ResponseEntity<List<CommentOut>> getAllCommentByPostId(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.getAllCommentByPostId(id), HttpStatus.OK);
-    }
 
     @PostMapping("/addTagToPost/{postId}/{tagId}")
     public void addTagToPost(@PathVariable Long tagId, @PathVariable Long postId) {

@@ -24,8 +24,8 @@ public class ProfileController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<ProfileOut>> getAll(){
-        return new ResponseEntity<>(profileService.getAll(),HttpStatus.OK);
+    public ResponseEntity<List<ProfileOut>> getAll() {
+        return new ResponseEntity<>(profileService.getAll(), HttpStatus.OK);
     }
 
 //    @PostMapping("")
@@ -34,12 +34,12 @@ public class ProfileController {
 //    }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id")Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         profileService.deleteById(id);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileOut> getById(@PathVariable("id")Long id ){
-        return new ResponseEntity<>(profileService.getById(id),HttpStatus.OK);
+    public ResponseEntity<ProfileOut> getById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(profileService.getById(id), HttpStatus.OK);
     }
 }

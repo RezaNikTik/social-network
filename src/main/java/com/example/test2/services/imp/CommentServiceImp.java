@@ -29,8 +29,8 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public List<CommentOut> getAll(Integer size,Integer pageCount) {
-        Pageable  pageable = PageRequest.of(size,pageCount);
+    public List<CommentOut> getAll(Integer size, Integer pageCount) {
+        Pageable pageable = PageRequest.of(size, pageCount);
         Page<CommentEntity> lists = commentRepository.findAll(pageable);
         if (lists.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);

@@ -25,13 +25,13 @@ public class UserController {
     }
 
     @GetMapping("/{size}/{pageCount}")
-    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer size,@PathVariable Integer pageCount) {
-        return new ResponseEntity<>(userService.getAll(size,pageCount),HttpStatus.OK);
+    public ResponseEntity<List<UserOut>> getAll(@PathVariable Integer size, @PathVariable Integer pageCount) {
+        return new ResponseEntity<>(userService.getAll(size, pageCount), HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<UserOut> create(@Valid @RequestBody UserIn model, BindingResult bindingResult) {
-        return new  ResponseEntity<>(userService.create(model),HttpStatus.OK);
+        return new ResponseEntity<>(userService.create(model), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @GetMapping("/getById/{id}")
-    public  ResponseEntity<UserOut> getById(@PathVariable(value = "id") long id) throws CustomException {
-        return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
+    public ResponseEntity<UserOut> getById(@PathVariable(value = "id") long id) throws CustomException {
+        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{userId}")

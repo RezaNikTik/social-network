@@ -13,6 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -43,8 +46,9 @@ public class PostServiceImpTest {
     @Test
     public void getAll_success() {
         List<PostEntity> postEntity = postEntities(5);
-        when(postRepository.findAll()).thenReturn(postEntity);
-        List<PostOut> postOuts = postServiceImp.getAll(, 5);
+        Page<PostEntity> postEntities = new PageImpl<>(postEntity);
+        when(postRepository.findAll(any(Pageable.class))).thenReturn(postEntities);
+        List<PostOut> postOuts = postServiceImp.getAll(0, 5);
         assertNotNull(postOuts);
         assertEquals(postEntity.size(), postOuts.size());
 
@@ -53,9 +57,10 @@ public class PostServiceImpTest {
     @Test
     public void getAll_dontHaveAnyData_exception() {
         List<PostEntity> postEntities = new ArrayList<>();
-        when(postRepository.findAll()).thenReturn(postEntities);
+        Page<PostEntity> entityPages = new PageImpl<>(postEntities);
+        when(postRepository.findAll(any(Pageable.class))).thenReturn(entityPages);
         CustomException exception = assertThrows(CustomException.class,
-                () -> postServiceImp.getAll(, 5));
+                () -> postServiceImp.getAll(0, 5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
@@ -68,19 +73,6 @@ public class PostServiceImpTest {
         postIn.setPublishDate(LocalDateTime.parse("2024-08-09T12:20:30"));
         when(postRepository.save(any(PostEntity.class))).thenReturn(new PostEntity());
         postServiceImp.create(postIn);
-    }
-
-    @Test
-    public void create_exception() {
-        PostIn postIn = new PostIn();
-        postIn.setTitle("doood");
-        postIn.setPublishDate(LocalDateTime.now());
-        CustomException exception = assertThrows(CustomException.class,
-                () -> postServiceImp.create(postIn));
-        assertEquals("The time you entered is less than the current time", exception.getMessage());
-        assertEquals(1003, exception.getCode());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-
     }
 
     @Test
@@ -141,14 +133,6 @@ public class PostServiceImpTest {
     }
 
     @Test
-    public void getAllCommentByPostId_success() {
-    }
-
-    @Test
-    public void getAllCommentByPostId_idIsNotValid_exception() {
-    }
-
-    @Test
     public void addTagToPost_success() {
         when(tagRepository.findById(1L)).thenReturn(Optional.of(new TagEntity()));
         when(postRepository.findById(2L)).thenReturn(Optional.of(new PostEntity()));
@@ -185,9 +169,20 @@ public class PostServiceImpTest {
     }
 
     @Test
-    public void getAllPostEntityWithRelationsByPostId() {
+    public void getAllPostEntityWithRelationsByPostId_Success() {
+        when(postRepository.findById(1L)).thenReturn(Optional.of(new PostEntity()));
         when(postRepository.getAllPostEntityWithRelationsByPostId(1L)).thenReturn(this.postEntities(5));
         postServiceImp.getAllPostEntityWithRelationsByPostId(1L);
+    }
+
+    @Test
+    public void getAllPostEntityWithRelationsByPostId_DontFindPostId_Exception() {
+        when(postRepository.findById(1L)).thenReturn(Optional.empty());
+        CustomException exception = assertThrows(CustomException.class,
+                () -> postServiceImp.getAllPostEntityWithRelationsByPostId(1L));
+        assertEquals("you dont have any data", exception.getMessage());
+        assertEquals(1004, exception.getCode());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test

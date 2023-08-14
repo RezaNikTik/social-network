@@ -28,16 +28,10 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     @Query("update post p set p.title=:#{#model.title} where p.id=:id")
     void updateById(@PathVariable("id") Long id, PostIn model);
 
-    @Modifying
-    @Query("select c from comment c where c.postEntity.id =:postId")
-    List<CommentEntity> getAllCommentByPostId(@PathVariable Long postId);
-
-
     @Transactional
     @Modifying
     @Query(value = "insert into TAG_POST(tag_id, post_id) values(:tagId, :postId)", nativeQuery = true)
     void addTagToPost(@Param("tagId") Long tagId, @Param("postId") Long postId);
-
 
     @Modifying
     @Query(value = "select t.* from tag t join TAG_POST tp on t.id=tp.tag_id where tp.POST_ID=:postId", nativeQuery = true)

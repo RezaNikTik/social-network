@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.transaction.Transactional;
 
 @Repository
-public interface TagRepository extends JpaRepository<TagEntity,Long> {
+public interface TagRepository extends JpaRepository<TagEntity, Long> {
 
     @Transactional
     @Modifying

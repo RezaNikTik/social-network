@@ -16,6 +16,9 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
@@ -44,8 +47,9 @@ public class UserServiceImpTest {
     @Test
     public void getAll_success() {
         List<UserEntity> list = this.userEntities(5);
-        Mockito.when(userRepository.findAll()).thenReturn(list);
-        List<UserOut> userOuts = userServiceImp.getAll(5);
+        Page<UserEntity> entityPage = new PageImpl<>(list);
+        Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
+        List<UserOut> userOuts = userServiceImp.getAll(0, 5);
         assertNotNull(userOuts);
         assertEquals(list.size(), userOuts.size());
     }
@@ -53,8 +57,9 @@ public class UserServiceImpTest {
     @Test
     public void getAll_dontHaveAnyData_exception() {
         List<UserEntity> list = new ArrayList<>();
-        Mockito.when(userRepository.findAll()).thenReturn(list);
-        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(5));
+        Page<UserEntity> entityPage = new PageImpl<>(list);
+        Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
+        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(0, 5));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

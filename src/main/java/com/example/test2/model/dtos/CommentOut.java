@@ -21,7 +21,7 @@ public class CommentOut {
         if (commentEntity != null) {
             this.message = commentEntity.getMessage();
 
-            if (Hibernate.isInitialized(commentEntity.getPostEntity().getId()) && commentEntity.getPostEntity().getId() != null){
+            if (Hibernate.isInitialized(commentEntity.getPostEntity()) && commentEntity.getPostEntity() != null) {
                 this.postId = commentEntity.getPostEntity().getId();
             }
         }

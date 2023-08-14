@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PostService {
 
-    List<PostOut> getAll(Integer size,Integer pageCount);
+    List<PostOut> getAll(Integer size, Integer pageCount);
 
     PostOut create(PostIn model);
 
@@ -20,8 +20,6 @@ public interface PostService {
     PostOut getById(Long id) throws CustomException;
 
     public void updateById(Long id, PostIn model);
-
-    List<CommentOut> getAllCommentByPostId(Long postId);
 
     void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId);
 

@@ -66,6 +66,15 @@ public class UserInTest {
         userIn.setPassword("123");
         userIn.setAge(1);
         userIn.setEmail("sdlfjl;jd");
+        userIn.setProfileIn(this.createProfileIn());
         return userIn;
+    }
+
+    private ProfileIn createProfileIn() {
+        ProfileIn profile = new ProfileIn();
+        profile.setZipCode("123");
+        profile.setCity("teh");
+        profile.setCountry("ir");
+        return profile;
     }
 }
