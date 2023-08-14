@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
@@ -39,8 +40,9 @@ public class TagServiceImpTest {
     public void getAll_success() {
         List<TagEntity> list = tagEntities(5);
         Page<TagEntity> entityPage = new PageImpl<>(list);
+        Pageable pageable = PageRequest.of(0,2);
         when(tagRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
-        List<TagOut> tag = tagServiceImp.getAll(any(Pageable.class));
+        List<TagOut> tag = tagServiceImp.getAll(pageable);
         assertNotNull(tag);
         assertEquals(list.size(), tag.size());
     }
@@ -50,7 +52,9 @@ public class TagServiceImpTest {
         List<TagEntity> tagEntities = new ArrayList<>();
         Page<TagEntity> entityPage = new PageImpl<>(tagEntities);
         when(tagRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
-        CustomException exception = assertThrows(CustomException.class, () -> tagServiceImp.getAll(any(Pageable.class)));
+        Pageable pageable = PageRequest.of(0,2);
+        CustomException exception = assertThrows(CustomException.class,
+                () -> tagServiceImp.getAll(pageable));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());

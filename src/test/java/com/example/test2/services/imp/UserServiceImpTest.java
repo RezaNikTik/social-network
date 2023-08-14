@@ -12,12 +12,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
@@ -27,6 +28,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @PrepareForTest(UserServiceImp.class)
@@ -49,8 +51,9 @@ public class UserServiceImpTest {
     public void getAll_success() {
         List<UserEntity> list = this.userEntities(5);
         Page<UserEntity> entityPage = new PageImpl<>(list);
-        Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
-        List<UserOut> userOuts = userServiceImp.getAll(any(Pageable.class));
+        Pageable pageable = PageRequest.of(0,2);
+        when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
+        List<UserOut> userOuts = userServiceImp.getAll(pageable);
         assertNotNull(userOuts);
         assertEquals(list.size(), userOuts.size());
     }
@@ -59,8 +62,10 @@ public class UserServiceImpTest {
     public void getAll_dontHaveAnyData_exception() {
         List<UserEntity> list = new ArrayList<>();
         Page<UserEntity> entityPage = new PageImpl<>(list);
-        Mockito.when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
-        CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.getAll(any(Pageable.class)));
+        when(userRepository.findAll(Mockito.any(Pageable.class))).thenReturn(entityPage);
+        Pageable pageable = PageRequest.of(0,2);
+        CustomException exception = assertThrows(CustomException.class,
+                () -> userServiceImp.getAll(pageable));
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
@@ -77,23 +82,23 @@ public class UserServiceImpTest {
         UserIn userIn = this.userIn();
         userIn.setProfileIn(profile);
 
-        Mockito.when(profileServiceImp.create(Mockito.any(ProfileIn.class))).thenReturn(new ProfileEntity());
+        when(profileServiceImp.create(Mockito.any(ProfileIn.class))).thenReturn(new ProfileEntity());
         userIn.setProfileIn(profile);
-        Mockito.when(userRepository.save(this.createUserEntity())).thenReturn(new UserEntity());
+        when(userRepository.save(this.createUserEntity())).thenReturn(new UserEntity());
 
         UserOut userOut = userServiceImp.create(userIn);
     }
 
     @Test
     public void deleteById_success() {
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
         assertDoesNotThrow(() -> userServiceImp.deleteById(1L));
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(1L);
     }
 
     @Test
     public void deleteById_idIsNotValid_exception() {
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         CustomException exception = assertThrows(CustomException.class, () -> userServiceImp.deleteById(1L));
         assertEquals("The ID you entered does not exist", exception.getMessage());
         assertEquals(1001, exception.getCode());
@@ -102,13 +107,13 @@ public class UserServiceImpTest {
 
     @Test
     public void getById_success() {
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
         userServiceImp.getById(1L);
     }
 
     @Test
     public void getById_idIsNotValid_exception() {
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         CustomException exceptions = assertThrows(CustomException.class,
                 () -> userServiceImp.getById(1L));
         assertEquals("The ID you entered does not exist", exceptions.getMessage());
@@ -119,7 +124,7 @@ public class UserServiceImpTest {
     @Test
     public void update_success() {
         UserIn userIn = this.userIn();
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(new UserEntity()));
         profileRepository.updateById(2L, userIn);
         userServiceImp.update(1L, userIn);
     }
@@ -128,7 +133,7 @@ public class UserServiceImpTest {
     public void update_idIsNotValid_exception() {
         UserIn userIn = this.userIn();
 
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         CustomException exceptions = assertThrows(CustomException.class,
                 () -> userServiceImp.update(1L, userIn));
         assertEquals("The ID you entered does not exist", exceptions.getMessage());

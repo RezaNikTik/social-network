@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
@@ -44,8 +45,9 @@ public class CommentServiceImpTest {
     public void getAll_success() {
         List<CommentEntity> commentEntities = createCommentEntities(5);
         Page<CommentEntity> entityPage = new PageImpl<>(commentEntities);
+        Pageable pageable = PageRequest.of(0,2);
         when(commentRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
-        List<CommentOut> comments = commentServiceImp.getAll(any(Pageable.class));
+        List<CommentOut> comments = commentServiceImp.getAll(pageable);
         assertNotNull(comments);
         assertEquals(commentEntities.size(), comments.size());
     }
@@ -55,8 +57,9 @@ public class CommentServiceImpTest {
         List<CommentEntity> list = new ArrayList<>();
         Page<CommentEntity> entityPage = new PageImpl<>(list);
         when(commentRepository.findAll(any(Pageable.class))).thenReturn(entityPage);
+        Pageable pageable = PageRequest.of(0,2);
         CustomException exception = assertThrows(CustomException.class,
-                () -> commentServiceImp.getAll(any(Pageable.class)));
+                () -> commentServiceImp.getAll(pageable));
 
         assertEquals("you dont have any data", exception.getMessage());
         assertEquals(1004, exception.getCode());
