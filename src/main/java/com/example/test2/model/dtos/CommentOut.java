@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentOut {
+public class CommentOut implements Serializable {
 
     private String message;
 

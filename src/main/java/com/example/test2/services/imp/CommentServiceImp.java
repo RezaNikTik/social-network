@@ -8,6 +8,7 @@ import com.example.test2.model.entities.PostEntity;
 import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.services.CommentService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    @Cacheable(value = "CommentOut")
     public List<CommentOut> getAll(Pageable pageable) {
         Page<CommentEntity> lists =
                 commentRepository.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort()));
@@ -56,6 +58,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    @Cacheable(value = "CommentOut",key = "#id")
     public CommentOut getById(Long id) throws CustomException {
         Optional<CommentEntity> comment = commentRepository.findById(id);
         showMessageForNotValidId(id);

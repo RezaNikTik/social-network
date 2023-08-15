@@ -20,7 +20,7 @@ public interface PostService {
 
     PostOut getById(Long id) throws CustomException;
 
-    public void updateById(Long id, PostIn model);
+     void updateById(Long id, PostIn model);
 
     void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId);
 

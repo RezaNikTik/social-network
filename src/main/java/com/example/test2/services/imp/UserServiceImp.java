@@ -9,9 +9,11 @@ import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
 import com.example.test2.services.UserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,7 @@ public class UserServiceImp implements UserService {
 
     private final ProfileServiceImp profileServiceImp;
 
+
     public UserServiceImp(UserRepository userRepository, ProfileRepository profileRepository, ProfileServiceImp profileServiceImp) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
@@ -36,6 +39,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @Cacheable(value = "UserOut")
     public List<UserOut> getAll(Pageable pageable) {
         Page<UserEntity> userEntities =
                 userRepository.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort()));
@@ -64,6 +68,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @Cacheable(value = "UserOut",key = "#id")
     public UserOut getById(Long id) throws CustomException {
         UserEntity user = getUserById(id);
         return new UserOut(user);

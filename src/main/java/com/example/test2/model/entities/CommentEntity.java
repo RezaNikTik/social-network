@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "comment")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentEntity {
+public class CommentEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

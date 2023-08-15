@@ -10,6 +10,7 @@ import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.PostService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class PostServiceImp implements PostService {
 
 
     @Override
+    @Cacheable(value = "PostOut")
     public List<PostOut> getAll(Pageable pageable) {
         Page<PostEntity> postOutPages =
                 postRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),pageable.getSort()));
@@ -57,6 +59,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @Cacheable(value = "PostOut",key = "#id")
     public PostOut getById(Long id) throws CustomException {
         PostEntity postEntity = showMessageForNotValidId(id);
         return new PostOut(postEntity);
@@ -83,6 +86,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @Cacheable(value = "List<PostOut>",key = "#postId",sync = true)
     public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId) {
         Optional<PostEntity> postOut = postRepository.findById(postId);
         if (postOut.isEmpty()) {

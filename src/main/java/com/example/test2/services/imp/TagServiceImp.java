@@ -6,6 +6,7 @@ import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
+    @Cacheable(value = "TagOut")
     public List<TagOut> getAll(Pageable pageable) {
         Page<TagEntity> list =
                 tagRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),pageable.getSort()));
@@ -48,6 +50,7 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
+    @Cacheable(value = "TagOut",key = "#id")
     public TagOut getById(Long id) throws CustomException {
         Optional<TagEntity> entity = tagRepository.findById(id);
         showMessageForNotValidId(id);

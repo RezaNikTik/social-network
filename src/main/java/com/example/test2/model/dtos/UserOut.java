@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
+import java.io.Serializable;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserOut {
+public class UserOut implements Serializable {
 
     private String firstName;
     private String lastName;

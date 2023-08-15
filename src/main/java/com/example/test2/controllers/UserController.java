@@ -4,6 +4,8 @@ import com.example.test2.errorHandling.exception.CustomException;
 import com.example.test2.model.dtos.UserIn;
 import com.example.test2.model.dtos.UserOut;
 import com.example.test2.services.UserService;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

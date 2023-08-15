@@ -8,13 +8,14 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "UserEntity")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)
@@ -36,7 +37,7 @@ public class UserEntity {
     private String email;
 
     @Cascade({CascadeType.PERSIST})
-    @OneToOne(mappedBy = "userEntity",cascade = javax.persistence.CascadeType.REMOVE)
+    @OneToOne(mappedBy = "userEntity")
     @PrimaryKeyJoinColumn
     private ProfileEntity profileEntity;
 }

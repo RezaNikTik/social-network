@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "profile")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileEntity {
+public class ProfileEntity implements Serializable {
 
     @Id
     private Long id;

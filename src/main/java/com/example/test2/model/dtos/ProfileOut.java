@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileOut {
+public class ProfileOut  implements Serializable {
 
     private Long profileId;
     private String country;
