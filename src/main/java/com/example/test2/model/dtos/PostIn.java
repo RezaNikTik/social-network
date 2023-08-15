@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostIn {
     private String title;
-    @FutureOrPresent(message = "The time you entered is more than the current time")
+    @FutureOrPresent(message = "The time you entered is less than the current time")
     private LocalDateTime publishDate;
 
     public PostEntity convertToEntity(PostEntity postEntity) {
