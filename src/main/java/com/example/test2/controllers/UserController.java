@@ -40,7 +40,7 @@ public class UserController {
         userService.deleteById(id);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserOut> getById(@PathVariable(value = "id") long id) throws CustomException {
         return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }

@@ -32,7 +32,7 @@ public class CommentController {
         return new ResponseEntity<>(commentService.create(model), HttpStatus.OK);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CommentOut> getById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(commentService.getById(id), HttpStatus.OK);
     }

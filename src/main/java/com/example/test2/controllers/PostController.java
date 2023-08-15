@@ -36,7 +36,7 @@ public class PostController {
         return new ResponseEntity<>(postService.create(model), HttpStatus.OK);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PostOut> getById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(postService.getById(id), HttpStatus.OK);
     }

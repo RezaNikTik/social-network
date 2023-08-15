@@ -35,8 +35,8 @@ public class UserEntity {
     @Column(name = "Email", nullable = false, length = 50)
     private String email;
 
-    @Cascade(CascadeType.PERSIST)
-    @OneToOne(mappedBy = "userEntity")
+    @Cascade({CascadeType.PERSIST})
+    @OneToOne(mappedBy = "userEntity",cascade = javax.persistence.CascadeType.REMOVE)
     @PrimaryKeyJoinColumn
     private ProfileEntity profileEntity;
 }

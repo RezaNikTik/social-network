@@ -30,7 +30,7 @@ public class TagController {
         return new ResponseEntity<>(tagService.create(model), HttpStatus.OK);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TagOut> getById(@PathVariable Long id) {
         return new ResponseEntity<>(tagService.getById(id), HttpStatus.OK);
     }
