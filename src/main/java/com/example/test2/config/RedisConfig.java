@@ -23,6 +23,8 @@ public class RedisConfig {
         // Defaults
         redisConnectionFactory.setHostName("127.0.0.1");
         redisConnectionFactory.setPort(6379);
+        redisConnectionFactory.getPoolConfig().setMaxIdle(20);
+        redisConnectionFactory.getPoolConfig().setMinIdle(10);
         return redisConnectionFactory;
     }
 

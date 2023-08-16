@@ -1,7 +1,6 @@
 package com.example.test2.services.imp;
 
 import com.example.test2.errorHandling.exception.CustomException;
-import com.example.test2.model.dtos.CommentOut;
 import com.example.test2.model.dtos.PostIn;
 import com.example.test2.model.dtos.PostOut;
 import com.example.test2.model.dtos.TagOut;
@@ -10,6 +9,8 @@ import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.PostService;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ public class PostServiceImp implements PostService {
 
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
+
 
     public PostServiceImp(PostRepository profileRepository, TagRepository tagRepository) {
         this.postRepository = profileRepository;
@@ -70,6 +72,7 @@ public class PostServiceImp implements PostService {
         postRepository.updateById(id, model);
     }
 
+    @CacheEvict(value = "PostEntity")
     public void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId) {
         Optional<TagEntity> tagEntity = tagRepository.findById(tagId);
         if (tagEntity.isEmpty()) {
@@ -86,7 +89,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    @Cacheable(value = "List<PostOut>",key = "#postId",sync = true)
+    @Cacheable(value = "List<PostOut>",key = "#postId")
     public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId) {
         Optional<PostEntity> postOut = postRepository.findById(postId);
         if (postOut.isEmpty()) {
