@@ -9,6 +9,7 @@ import com.example.test2.model.entities.UserEntity;
 import com.example.test2.repositories.ProfileRepository;
 import com.example.test2.repositories.UserRepository;
 import com.example.test2.services.UserService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    @Cacheable(value = "UserOut")
+    @Cacheable(value = "UserEntity")
     public List<UserOut> getAll(Pageable pageable) {
         Page<UserEntity> userEntities =
                 userRepository.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort()));
@@ -50,6 +51,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "UserEntity",allEntries = true)
     public UserOut create(UserIn model) {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         model.setPassword(passwordEncoder.encode(model.getPassword()));
@@ -62,17 +64,19 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "UserEntity",key = "#id")
     public void deleteById(Long id) throws CustomException {
         getUserById(id);
         userRepository.deleteById(id);
     }
 
     @Override
-    @Cacheable(value = "UserOut",key = "#id")
+    @Cacheable(value = "UserEntity",key = "#id")
     public UserOut getById(Long id) throws CustomException {
         UserEntity user = getUserById(id);
         return new UserOut(user);
     }
+
 
     private UserEntity getUserById(Long id) throws CustomException {
         Optional<UserEntity> optionalUser = userRepository.findById(id);
@@ -81,6 +85,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "UserEntity",key = "#userId",allEntries = true)
     public void update(Long userId, UserIn user) {
         showMessageForNotValidId(userId);
         profileRepository.updateById(userId, user);

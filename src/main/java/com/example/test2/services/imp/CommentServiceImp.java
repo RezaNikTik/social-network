@@ -8,6 +8,8 @@ import com.example.test2.model.entities.PostEntity;
 import com.example.test2.repositories.CommentRepository;
 import com.example.test2.repositories.PostRepository;
 import com.example.test2.services.CommentService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +32,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    @Cacheable(value = "CommentOut")
+    @Cacheable(value = "CommentEntity")
     public List<CommentOut> getAll(Pageable pageable) {
         Page<CommentEntity> lists =
                 commentRepository.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort()));
@@ -41,6 +43,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    @CacheEvict(value = "CommentEntity",allEntries = true)
     public CommentOut create(CommentIn model) {
         CommentEntity commentEntity = model.convertToEntity(new CommentEntity());
         Optional<PostEntity> post = postRepository.findById(model.getPostId());
@@ -52,13 +55,14 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    @CacheEvict(value = "CommentEntity",key = "#id")
     public void deleteById(Long id) throws CustomException {
         showMessageForNotValidId(id);
         commentRepository.deleteById(id);
     }
 
     @Override
-    @Cacheable(value = "CommentOut",key = "#id")
+    @Cacheable(value = "CommentEntity",key = "#id")
     public CommentOut getById(Long id) throws CustomException {
         Optional<CommentEntity> comment = commentRepository.findById(id);
         showMessageForNotValidId(id);
@@ -66,6 +70,7 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    @CacheEvict(value = "CommentEntity",key = "#id")
     public void updateById(Long id, CommentIn model) {
         showMessageForNotValidId(id);
         commentRepository.updateById(id, model);

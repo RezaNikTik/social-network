@@ -6,6 +6,8 @@ import com.example.test2.model.dtos.TagOut;
 import com.example.test2.model.entities.TagEntity;
 import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.TagService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +28,9 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
-    @Cacheable(value = "TagOut")
+    @Cacheable(value = "TagEntity")
     public List<TagOut> getAll(Pageable pageable) {
-        Page<TagEntity> list =
-                tagRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),pageable.getSort()));
+        Page<TagEntity> list = tagRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()));
         if (list.isEmpty()) {
             throw new CustomException("you dont have any data", 1004, HttpStatus.NOT_FOUND);
         }
@@ -37,6 +38,7 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
+    @CacheEvict(value = "TagEntity",allEntries = true)
     public TagOut create(TagIn model) {
         TagEntity tagEntity = model.convertToEntity(new TagEntity());
         TagEntity newTagEntity = tagRepository.save(tagEntity);
@@ -44,13 +46,14 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
+    @CacheEvict(value = "TagEntity", key = "#id")
     public void deleteById(Long id) throws CustomException {
         showMessageForNotValidId(id);
         tagRepository.deleteById(id);
     }
 
     @Override
-    @Cacheable(value = "TagOut",key = "#id")
+    @Cacheable(value = "TagEntity", key = "#id")
     public TagOut getById(Long id) throws CustomException {
         Optional<TagEntity> entity = tagRepository.findById(id);
         showMessageForNotValidId(id);
@@ -58,6 +61,7 @@ public class TagServiceImp implements TagService {
     }
 
     @Override
+    @CacheEvict(value = "TagEntity",allEntries = true)
     public void updateById(Long id, TagIn tagIn) throws CustomException {
         showMessageForNotValidId(id);
         tagRepository.updateById(id, tagIn);

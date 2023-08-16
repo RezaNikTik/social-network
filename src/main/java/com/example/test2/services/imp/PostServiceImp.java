@@ -11,6 +11,7 @@ import com.example.test2.repositories.TagRepository;
 import com.example.test2.services.PostService;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +48,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @CacheEvict(value = "PostEntity",allEntries = true)
     public PostOut create(PostIn model) {
         PostEntity postEntity = model.convertToEntity(new PostEntity());
         PostEntity newPostEntity = postRepository.save(postEntity);
@@ -54,6 +56,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @CacheEvict(value = "PostEntity",key = "#id")
     public void deleteById(Long id) throws CustomException {
         Optional<PostEntity> optionalPost = postRepository.findById(id);
         showMessageForNotValidId(optionalPost);
@@ -67,12 +70,15 @@ public class PostServiceImp implements PostService {
         return new PostOut(postEntity);
     }
 
+    @Override
+    @CacheEvict(value = "PostEntity",allEntries = true)
     public void updateById(Long id, PostIn model) {
         showMessageForNotValidId(id);
         postRepository.updateById(id, model);
     }
 
-    @CacheEvict(value = "PostEntity")
+    @Override
+    @CacheEvict(value = "PostEntity",allEntries = true)
     public void addTagToPost(@PathVariable Long postId, @PathVariable Long tagId) {
         Optional<TagEntity> tagEntity = tagRepository.findById(tagId);
         if (tagEntity.isEmpty()) {
@@ -83,6 +89,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @CacheEvict(value = "PostEntity",key = "#postId")
     public List<TagOut> getAllTagAssignToPost(Long postId) {
         showMessageForNotValidId(postId);
         return postRepository.getAllTagAssignToPost(postId).stream().map(TagOut::new).toList();
