@@ -1,13 +1,12 @@
 package com.example.test2.model.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -28,7 +27,7 @@ public class TagEntity implements Serializable {
     private String name;
 
 
-    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(value = CascadeType.DETACH)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tag_post",
             joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),

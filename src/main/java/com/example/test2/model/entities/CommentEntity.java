@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,6 +27,7 @@ public class CommentEntity implements Serializable {
     @Column(insertable = false,updatable = false)
     private Long post_Id;
 
+    @Cascade(CascadeType.DETACH)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,12 +28,13 @@ public class PostEntity implements Serializable {
 
     private LocalDateTime publishDate;
 
-    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade({CascadeType.DETACH})
     @ManyToMany(mappedBy = "postEntity", fetch = FetchType.LAZY)
     @JsonIgnore
     Set<TagEntity> tagEntity = new HashSet<>();
 
-    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL)
+    @Cascade(CascadeType.DETACH)
+    @OneToMany(mappedBy = "postEntity")
     private Set<CommentEntity> commentEntityPost;
 
 

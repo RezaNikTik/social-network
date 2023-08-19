@@ -36,7 +36,7 @@ public class UserEntity implements Serializable {
     @Column(name = "Email", nullable = false, length = 50)
     private String email;
 
-    @Cascade({CascadeType.PERSIST})
+    @Cascade({CascadeType.PERSIST,CascadeType.REMOVE})
     @OneToOne(mappedBy = "userEntity")
     @PrimaryKeyJoinColumn
     private ProfileEntity profileEntity;

@@ -37,7 +37,7 @@ public class PostServiceImp implements PostService {
 
 
     @Override
-    @Cacheable(value = "PostOut")
+    @Cacheable(value = "PostEntity")
     public List<PostOut> getAll(Pageable pageable) {
         Page<PostEntity> postOutPages =
                 postRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),pageable.getSort()));
@@ -64,7 +64,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    @Cacheable(value = "PostOut",key = "#id")
+    @Cacheable(value = "PostEntity",key = "#id")
     public PostOut getById(Long id) throws CustomException {
         PostEntity postEntity = showMessageForNotValidId(id);
         return new PostOut(postEntity);
@@ -96,7 +96,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    @Cacheable(value = "List<PostOut>",key = "#postId")
+    @Cacheable(value = "List<PostEntity>",key = "#postId")
     public List<PostOut> getAllPostEntityWithRelationsByPostId(Long postId) {
         Optional<PostEntity> postOut = postRepository.findById(postId);
         if (postOut.isEmpty()) {
