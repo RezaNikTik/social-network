@@ -24,7 +24,7 @@ public class CommentEntity implements Serializable {
     @Column(name = "message", nullable = false, length = 500)
     private String message;
 
-    @Column(insertable = false,updatable = false)
+    @Column(insertable = false, updatable = false)
     private Long post_Id;
 
     @Cascade(CascadeType.DETACH)
