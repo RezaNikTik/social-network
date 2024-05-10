@@ -8,11 +8,13 @@ import com.example.test2.services.TagService;
 import com.example.test2.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
+@Profile("dev")
 public class UserCommandLineRunner implements CommandLineRunner {
 
     @Autowired

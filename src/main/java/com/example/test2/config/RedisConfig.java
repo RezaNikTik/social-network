@@ -1,10 +1,8 @@
 package com.example.test2.config;
 
 import lombok.AllArgsConstructor;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,14 +16,7 @@ public class RedisConfig {
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
-
-        // Defaults
-        redisConnectionFactory.setHostName("127.0.0.1");
-        redisConnectionFactory.setPort(6379);
-        redisConnectionFactory.getPoolConfig().setMaxIdle(20);
-        redisConnectionFactory.getPoolConfig().setMinIdle(10);
-        return redisConnectionFactory;
+        return new JedisConnectionFactory();
     }
 
     @Bean
@@ -45,12 +36,4 @@ public class RedisConfig {
     }
 
 
-//    @Bean
-//    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-//        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-//
-//        // Number of seconds before expiration. Defaults to unlimited (0)
-//        cacheManager.se
-//        return cacheManager;
-//    }
 }
