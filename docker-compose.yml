@@ -1,0 +1,50 @@
+version: "3"
+services:
+  my-java-app:
+    container_name: my-java-app
+    build:
+      context: .
+      args:
+        SERVER_PORT: ${SERVER_PORT}
+    image: springbootsample:v1
+    restart: unless-stopped
+    env_file:
+      - ${ENV_FILE}
+    expose:
+      - ${SERVER_PORT}
+    ports:
+      - ${SERVER_PORT}:${HOST_PORT}
+    depends_on:
+      - redis
+    volumes:
+      - "./target/springBootSample.jar:/app/springBootSample.jar"
+    command: "sh -c 'java -jar /app/springBootSample.jar'"
+    networks:
+      - jaje
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - jaje
+
+#  postgres:
+#    image: postgres:latest
+#    container_name: postgres
+#    restart: unless-stopped
+#    ports:
+#      - "5432:5432"
+#    networks:
+#      - jaje
+
+
+networks:
+  jaje:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.0.1/24"
+
+

@@ -16,7 +16,11 @@ public class RedisConfig {
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
+        JedisConnectionFactory jedis =  new JedisConnectionFactory();
+        jedis.getPoolConfig().setMaxIdle(5);
+        jedis.getPoolConfig().setMinIdle(2);
+
+        return jedis;
     }
 
     @Bean
